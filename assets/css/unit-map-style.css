@@ -1,0 +1,146 @@
+html *
+{
+    font-family: Arial, Helvetica, sans-serif;
+}
+::-moz-selection {
+    background-color: transparent;
+    color: #181314;
+}
+
+::selection {
+    background-color: transparent;
+     color: #181314;
+}
+body {
+}
+
+a, a:visited {
+  color: #4d4d4d;
+  text-decoration: underline;
+}
+
+#container {
+  width: 95%;
+  margin: auto;
+}
+
+#main {
+  clear: both;
+}
+
+.control {
+  float: none;
+  padding-left: 20px;
+}
+
+.control a {
+  color: black;
+  font-size: 15px;
+  padding: 5px;
+  background: #E2E2E2;
+  cursor: pointer;
+  margin-right: 3px;
+  text-decoration: none;
+}
+
+.control a:hover {
+  text-decoration: underline;
+}
+
+.control a.active {
+  color: white;
+  background: #555;
+}
+
+p.search_title {
+  display: inline;
+  text-align: left;  
+  font-weight: normal;
+  color: #777;
+}
+
+#search_section {
+  padding-top: 23px;
+  padding-left: 20px;
+}
+
+#search_form #search {
+  margin-left: 10px;
+}
+
+footer p {
+  text-align: center;
+}
+/* unit map tooltips */
+.tooltip {
+  position: absolute;
+  opacity: 0.8;
+  background-color:black;
+  border: 2px solid white;
+  border-radius: 10px;
+  z-index: 1;
+  padding: 1px;
+  color: white;
+  text-align: center;
+  font-size: 10pt;
+  font-family: "Helvetica Narrow","Arial Narrow",Tahoma,Arial,Helvetica,sans-serif;
+}
+/* unit-map tooltip paragraph style*/
+.tooltip p.main {
+  margin: 0pt;
+}
+
+/* unit-map tooltip title*/ 
+.tooltip .title {
+  font-weight: bold;
+  margin: 0.6ex;
+  font-variant: small-caps;
+}
+ 
+
+/* Menu-option tooltips */
+.ui-tooltip {
+  position: absolute;
+  opacity: 0.8;
+  background-color:black;
+  border: 2px solid white;
+  border-radius: 10px;
+  z-index: 1;
+  color: white;
+  text-align: center;
+  font-size: 10pt;
+  padding: 1ex;
+  max-width: 150px;
+  font-family: "Helvetica Narrow","Arial Narrow",Tahoma,Arial,Helvetica,sans-serif;
+    }
+/* font-styling for unit-map ball labels in coffee code */
+circle.node {
+      opacity:0.8;
+      stroke-width:2px;
+}
+
+
+.stop-left1 {
+    stop-color: #ffc7d1;  
+}
+
+.stop-right1 {
+    stop-color: #bcbd22;
+   }
+.stop-left {
+  stop-color: #d62728;  
+}
+
+.stop-right {
+  stop-color: #2ca02c  
+}
+
+/* .filled {
+    fill: url(#mainGradient);
+}
+
+.outlined {
+    fill:   none;
+    stroke: url(#mainGradient);
+    stroke-width: 1;
+} */
