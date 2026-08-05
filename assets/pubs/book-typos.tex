@@ -133,6 +133,31 @@ $4\pi/(2\pi)^{3/2}=\sqrt{2/\pi}$. It is also consistent with the case $d=1$.
 transform of the derivative equals $\mathrm{i}\lambda$ times the Fourier
 transform (not ``the derivative of the Fourier transform''), in agreement with
 the preceding display $\widehat{u'}(\lambda)=\mathrm{i}\lambda\hat u(\lambda)$.
+   \item[p38] In Exercise 1.23, the projection $P_J$ should be onto
+$\operatorname{span}\{\mathrm{e}^{\mathrm{i}jx}\colon j=-J/2+1,\dots,J/2\}$ and
+not onto $\operatorname{span}\{\mathrm{e}^{2\pi\mathrm{i}jx}\}$. On $(0,2\pi)$
+the functions $\mathrm{e}^{\mathrm{i}jx}$ are the eigenfunctions of
+$Au=u-u_{xx}$ and the basis used in (1.35). The printed functions have period
+$1$ and are not even orthogonal on $(0,2\pi)$, since
+$\int_0^{2\pi}\mathrm{e}^{2\pi\mathrm{i}mx}\,dx
+=\bigl(\mathrm{e}^{4\pi^{2}\mathrm{i}m}-1\bigr)/(2\pi\mathrm{i}m)\ne0$ for
+integers $m\ne0$.
+   \item[p38] In Exercise 1.23(c), the final rate should read
+\[
+\|u_1\|_{{H}^1(0,2\pi)}-\|I_Ju_1\|_{{H}^1(0,2\pi)}=\mathcal{O}(J^{-4}).
+\]
+The periodic extension of the function $u_1$ of Figure 1.6 is $C^{2}$: $u_1$,
+$u_1'$ and $u_1''$ all agree at the two ends and only $u_1'''$ jumps, so three
+integrations by parts are available and $u_n=\mathcal{O}(n^{-4})$, giving $p=3$.
+The exercise is therefore in the case $2r<p$ of the first part, not the
+borderline $2r=p$ that produces $\mathcal{O}(J^{-3}\log J)$. On $(0,1)$ the
+coefficients are exactly $3/(2\pi^{4}n^{4})$.
+   \item[p38] In Exercise 1.23(c), $u_1$ is defined on $(0,1)$ by Figure 1.6,
+whereas the exercise works on $(0,2\pi)$; $u_1$ should be read as the
+corresponding rescaled function. The rates are unaffected.
+   \item[p39] In Exercise 1.28, ``Making use of DCT-1, evaluate $u^N(x)$ at
+$x=(k-1)\pi/(N-1)$'' should read $v^N(x)$, the function defined immediately
+above and plotted in the same sentence.
    \end{description}
  \item%C2
    \begin{description}
@@ -155,6 +180,17 @@ from (2.54) reproduces exactly that $K$.
 usually include an extra term on the right-hand side to account for $g\ne 0$ -- see (Renardy and Rogers,
 2004, Theorem 8.53) or (McLean, 2000, Theorem 4.10).
 
+   \item[p83] In Exercise 2.4(a), the jump (2.114) is taken across $x=y$ and is
+better written
+\[
+\bigl[G'(x,y)\bigr]_{x=y_-}^{x=y_+}=\frac{-1}{p(y)},
+\]
+that is, the limit of $G'(y+\epsilon,y)-G'(y-\epsilon,y)$ as $\epsilon$
+approaches $0$ from above. As printed, $G'$ denotes $\partial G/\partial x$ but
+the two limits are taken in the second argument, so the sentence does not
+describe the quantity being computed: the derivation integrates the equation
+over $x\in[y-\epsilon,y+\epsilon]$ at fixed $y$. Symmetry of $G$ makes the two
+expressions agree numerically, so nothing that follows is affected.
    \item[p84] In Exercise 2.11(b), the inequality holds as stated but does not
 follow by the method of part (a): Exercise 1.14(a) applies to functions
 vanishing at an endpoint, and $e'$ need not vanish at either endpoint of
@@ -308,6 +344,14 @@ $\mathbb{E}\bigl[(X^{k})^{+}\bigr]=\mathbb{E}\bigl[(X^{k})^{-}\bigr]=\infty$.
      \prob(X=x_k,Y=y_j)=P_{X,Y}(k,j)
      \]
 (interchange $j$ and $k$).
+   \item[p180] In Exercise 4.18, the comparison with ``performing a few scalar
+multiplications'' depends on how the multiplication is timed and is best
+dropped; the comparison with a trigonometric function is robust. Measured
+against the marginal cost of vectorised arithmetic on current hardware, a
+uniform sample costs of the order of $30$ multiplications and a Gaussian sample
+of the order of $85$. Only when the multiplication is timed as a whole array
+operation, with allocation included, is the cost of sampling ``a few''
+multiplications.
    \end{description}
  \item%C5
    \begin{description}
@@ -430,6 +474,13 @@ covariance $C(s,t)=\mathrm{e}^{-|s-t|}$ holds only for $\lambda=1$.
    \item[p221] In Example 6.8, the special case $q=1/2$ of the
 Whittle--Mat\'ern covariance should read $c_{1/2}(t)=\mathrm{e}^{-|t|}$, in
 agreement with (6.5), which defines $c_q$ in terms of $|t|$.
+   \item[p221] The identity (6.7) requires $\nu\ne0$. For a stationary process
+of mean $\mu$, the constant part contributes
+$\mu^{2}\bigl|\int_0^T\mathrm{e}^{-\mathrm{i}\nu t}\,dt\bigr|^{2}/(2\pi T)$,
+which is bounded by $2\mu^{2}/(\pi T\nu^{2})$ and so vanishes as $T\to\infty$
+whenever $\nu\ne0$; at $\nu=0$ it equals $\mu^{2}T/2\pi$ and diverges.
+Estimates of the spectral density from data are correspondingly useless at
+$\nu=0$ unless the mean is subtracted first.
    \item[p221] In Example 6.9, the approximation of the spectral density should
 read
 \[
@@ -501,6 +552,16 @@ self-paired term of the first sum is $j=P$, with $\omega^{P(k-1)}=(-1)^{k-1}$,
 and the conjugate pairs $\pm j$ run over $j=1,\dots,P-1$; note
 $\omega^{P/2}=\mathrm{i}$, so $c_{P/2}(-1)^{k-1}$ cannot arise. The stated
 range $k=1,\dots,P$ gives only $P$ of the $2P$ eigenvalues.
+   \item[p256] Exercise 6.21(b) is ambiguous, and under its literal reading the
+answer is negative. Fixing $\Delta t=1/(N-1)$ ties the sample points to $[0,1]$,
+so increasing $N$ refines the grid rather than lengthening the interval, and
+refining never helps: for $\ell=1$, the minimal extension has
+$\rho(D_-)=3.83$, $7.70$, $15.4$, $30.9$ at $N=100$, $200$, $400$, $800$.
+Only $\ell=0.1$, for which $[0,1]$ already spans ten correlation lengths, gives
+a non-negative definite $\widetilde{C}$ at every $N$. The intended reading is to
+pad, that is, to extend the sampled interval at fixed spacing $\Delta t$; the
+minimal extension then becomes non-negative definite once the interval covers
+about five correlation lengths.
    \end{description}
  \item%C7
  \begin{description}
@@ -951,9 +1012,25 @@ $v_n=\mathbb{E}[u_n^2]$ obeys
 $v_{n+1}=(1-\lambda\,\Delta t)^2v_n+\sigma^2\,\Delta t$, with fixed point
 $\sigma^2\,\Delta t/\bigl(1-(1-\lambda\,\Delta t)^2\bigr)$. The limit exists for
 $\lambda\,\Delta t<2$ and exceeds the exact value $\sigma^2/2\lambda$.
-   \item[p370] In Exercise 8.16(a), ``$M=-1$'' should read ``$A=-1$''. No $M$
-appears in the semilinear SODE (8.120) or in the exact solution (8.122); the
-linear coefficient is $A$.
+   \item[p370] In Exercise 8.10(a), $g(u_u)$ should read $g(u_n)$.
+   \item[p370] In Exercise 8.10(b), the part is stated for $m=1$, so there is a
+single Brownian motion and the increment driving component $k$ should be
+$\Delta W_n$, not $\Delta W_{k,n}$. The final term of the same display already
+carries $\Delta W_n^2$.
+   \item[p370] In Exercise 8.16(a), ``$M=-1$'' should read ``$A=1$''. No $M$
+appears in the semilinear SODE (8.120), in the semi-implicit method (8.121) or
+in the exact solution (8.122); the linear coefficient is $A$, and $M$ denotes
+the number of samples elsewhere in the chapter. The sign is fixed by (8.120),
+where the drift is written $-A\vec u+\vec f(\vec u)$: taking $A=1$ gives the
+decaying linear part that (8.122) describes, whereas $A=-1$ would give drift
+$+\vec u+\vec f(\vec u)$.
+   \item[p371] In (8.121), the trailing $dt$ should be deleted. The step
+$\Delta t$ already multiplies the drift, and the noise term carries the
+increment $\Delta\vec W_n$, so the equation reads
+\[
+\vec u_{n+1}=\vec u_n+\Delta t\bigl(-A\vec u_{n+1}+\vec f(\vec u_n)\bigr)
++G(\vec u_n)\,\Delta\vec W_n.
+\]
    \end{description}
  \item %C9
    \begin{description}
