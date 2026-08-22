@@ -1067,10 +1067,46 @@ twice in $|u(\cdot,\vec{y})|_{H^{2}(D)}$ and once in
 $|u|_{L_{p}^{2}(\Gamma,H^{2}(D))}$ --- should read $\tilde{u}$. Assumption 9.47
 bounds $|\tilde{u}|_{L_{p}^{2}(\Gamma,H^{2}(D))}$, so the final step of the
 proof requires the tilde.
+   \item[p398] Assumption 9.47 and Theorem 9.48 omit the boundary data.
+Theorem 9.48 is stated with $W^{h} \subset H_{g}^{1}(D)$, that is for
+non-homogeneous Dirichlet data, but Assumption 9.47 bounds
+$|\tilde{u}|_{L_{p}^{2}(\Gamma,H^{2}(D))}$ by a multiple of
+$\|\tilde{f}\|_{L_{p}^{2}(\Gamma,L^{2}(D))}$ alone, and so does (9.63). This is
+the point made for Assumption 2.64 in the p79 entry above: as printed, the
+assumption can be verified only for constant $g$. Both should carry a boundary
+term,
+\[
+|\tilde{u}|_{L_{p}^{2}(\Gamma,H^{2}(D))} \le K_{2}
+\Bigl(\|\tilde{f}\|_{L_{p}^{2}(\Gamma,L^{2}(D))}
++\|g\|_{H^{3/2}(\partial D)}\Bigr),
+\]
+and correspondingly, in (9.63),
+\[
+|\tilde{u}-\tilde{u}_{h}|_{W} \le
+K \sqrt{\tilde{a}_{\max}/\tilde{a}_{\min}}\; h
+\Bigl(\|\tilde{f}\|_{L_{p}^{2}(\Gamma,L^{2}(D))}
++\|g\|_{H^{3/2}(\partial D)}\Bigr).
+\]
+The intermediate step of the proof holds for any $g$, since
+$|\tilde{u}|_{H^{2}(D)}$ absorbs the boundary data; the term is lost only where
+Assumption 9.47 replaces $|\tilde{u}|_{H^{2}(D)}$ by $\|\tilde{f}\|$. For $g=0$
+the second term drops and the printed bounds are recovered.
    \item[p407] In Example 9.57, the MATLAB command should call
 \texttt{fem\_blocks} and not \texttt{fem\_components}. Algorithm 9.3 defines
 \texttt{[K\_mats,KB\_mats,f\_vecs,wB]=fem\_blocks(...)}, and the fifteen
 arguments supplied in the example match that signature.
+   \item[p410] In Theorem 9.62, the conclusion that the eigenvalues of
+$G_{\ell}$ are the roots of $P_{1},\ldots,P_{k+1}$ is correct, but the stated
+multiplicities are not: the count (9.106) is wrong except when $k+1-s\le 2$,
+and in any case a multiplicity cannot be attached to the roots of each $P_{s}$
+separately, because different $P_{s}$ share roots. For a symmetric weight, such
+as the Legendre or Hermite families, $0$ is a root of every odd-degree $P_{s}$;
+already in Example 9.60 it is an eigenvalue of multiplicity $2$. Nothing else in
+the chapter uses the multiplicities, and the two corollaries that follow need
+only the set of eigenvalues. For the multiplicities, see C.~E. Powell and
+H.~C. Elman, \enquote{Block-diagonal preconditioning for spectral stochastic
+finite-element systems}, IMA J. Numer. Anal. 29 (2009), 350--375. The proof also
+describes the permuted matrix as block tridiagonal; it is block diagonal.
    \item[p420] In (9.120), $\dfrac{dv^{k_{i}+1}}{dy^{k_{i}+1}}$ should read
 $\dfrac{d^{k_{i}+1}v}{dy_{i}^{k_{i}+1}}$.
    \item[p421] The order of differentiation is likewise misplaced in (9.121), in
