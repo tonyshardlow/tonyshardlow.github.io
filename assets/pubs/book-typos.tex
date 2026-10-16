@@ -2,7 +2,7 @@
 \usepackage[a4paper,margin=2.5cm]{geometry}
 	%
 % ams 
-\usepackage{amsmath,amsthm,mathtools}
+\usepackage{amsmath,amsthm,mathtools,microtype}
 % theorems style environments (from amsthm)
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}[theorem]{Lemma}
@@ -65,19 +65,31 @@ uniquename=false, useprefix=true]{biblatex}
     CUP, 2014}\\[2ex]
 \end{center}
 Here are the typos/errors that we know about in the first edition.  Detailed corrections to MATLAB codes are given
-on-line \footnote{\url{https://github.com/tonyshardlow/picspde}}. Let
+online\footnote{\url{https://github.com/tonyshardlow/picspde}}. Let
 us know if you find any more.\\
 \today
 
  \begin{enumerate}
  \item %C1
    \begin{description}
+   \item[p2] The statement that functions in $\mathrm{C}(\widebar D)$ are bounded,
+so that $(\mathrm{C}(\widebar D),\|\cdot\|_\infty)$ is a normed vector space,
+requires $D$ to be bounded. For $D=(0,\infty)$, the function $u(x)=x$ belongs
+to $\mathrm{C}([0,\infty))$ and $\|u\|_\infty=\infty$. The later definitions,
+which assume $D$ bounded, are correct.
+   \item[p7] In property (ii) of the integral, ``For integrable $u\colon X\to Y$'' (add \emph{integrable}).
    \item[p8] In Figure 1.2(b), the assertion that $u(x)=x^{-2}$ belongs to
 ${L}^p(1,\infty)$ for $p>2$ is not optimal. Since $\int_1^\infty x^{-2p}\,dx$ is
 finite whenever $p>1/2$, we have $u\in {L}^p(1,\infty)$ for every $p\ge 1$. 
    \item[p10] In the definition of ${L}^2(\Omega,{L}^2(D))$, the
 condition should read $u(\cdot,\omega)\in {L}^2(D)$ for almost every
 $\omega\in\Omega$ (not $\omega\in D$).
+   \item[p13] In Definition 1.42, the weak derivative of a $Y$-valued function
+is also $Y$-valued, $\mathcal{D}^{\vec\alpha}u\colon D\to Y$ (not $\real$-valued as printed). Further, for the integrals to
+exist, $u$ and $\mathcal{D}^{\vec\alpha}u$ should be integrable on every
+compact subset of $D$.  Definition 1.44 should say ``We say $\mathcal{D}^{\vec\alpha}u\in L^p(D,Y)$ is$\dots$''.
+   \item[p14] In Definition 1.47(ii), $H^2_{\mathrm{per}}(a,b)$ is a Hilbert
+space with the $H^2(a,b)$ inner product (rather than the $H^2(D)$ inner product).
    \item[p17] In Definition 1.60, the Hilbert–Schmidt norm should be defined as
 \[
 \|L\|_{\mathrm{HS}(U,H)}
@@ -88,37 +100,75 @@ j=1}
 ,
 \]
 (the norm on the right is the one in $H$ not in $U$).
+   \item[p19] ``Closed and bounded sets are not compact in infinite
+dimensions'' should read ``need not be compact'' (finite sets are compact), and
+``integral operators map bounded sets to compact ones'' should read ``to sets
+with compact closure'', as in Definition 1.67.
+   \item[p20] In Theorem 1.73(ii), and again in the proof of Theorem 1.80
+(p22), the eigenfunctions form an orthonormal basis for the \emph{closure} of
+the range of $L$. The range of a compact operator of infinite rank is not
+closed; for the Dirichlet Laplacian of Example 1.83, the range of $L=A^{-1}$ is
+$\mathcal{D}(A)$, whereas the eigenfunctions are a basis of $L^2(0,1)$.
 \item[p21] Lemma 1.78 (Dini’s lemma) requires additionally the assumption that $f$ is continuous (to guarantee that
 $f (x) - f_n(x) \ge\epsilon$  for the limit point $x$). In the application of Dini’s lemma for the proof of Theorem
 1.80 (Mercer’s theorem), this holds true for $g(x) = G(x, x)$.
+   \item[p21] In the proof of Lemma 1.77, non-negative definiteness
+of $L$ means $\langle u,Lu\rangle\ge0$. Its approximation of $G$ should use
+sets $F_j\in\mathcal{B}(D)$ and the same points $\vec x_j$ in both arguments. For $u$ vanishing outside a compact
+$K\subset D$, partition $K$ into sets $F_j\ni\vec x_j$ of small diameter, so
+that $G_N\coloneq\sum_{j,k}G(\vec x_j,\vec x_k)1_{F_j}(\vec x)1_{F_k}(\vec y)$
+converges to $G$ uniformly on $K\times K$. Then
+$\int_K\int_K u(\vec x)G_N(\vec x,\vec y)u(\vec y)\,d\vec x\,d\vec y
+=\sum_{j,k}a_ja_kG(\vec x_j,\vec x_k)\ge0$ with $a_j=\int_{F_j}u$, and the
+error is at most $|K|\sup_{K\times K}|G-G_N|\,\|u\|^2$. The general case $u\in L^2(D)$ follows
+by approximating $u$ by compactly supported functions, since $u\mapsto\langle u,Lu\rangle$ is continuous.
+   \item[p22] In the proof of Theorem 1.80 (Mercer's theorem), two steps need
+justification.
+\begin{itemize}
+\item ``$G-G_N$ is non-negative definite, as the corresponding integral operator
+has non-negative eigenvalues'' uses the converse of Lemma 1.77: a continuous
+kernel whose integral operator is non-negative definite is a non-negative
+definite function. This follows by taking
+$u=\sum_ja_j1_{B_\epsilon(\vec x_j)}/|B_\epsilon|$ and letting $\epsilon\to0$.
+\item Dini's lemma needs the limit $g$ to be continuous (see the entry for
+p21). For fixed $\vec x$, the Cauchy--Schwarz bound in the proof shows that
+$\sum_j\lambda_j\phi_j(\vec x)\phi_j(\vec y)$ converges uniformly in $\vec y$, so
+the limit is continuous in $\vec y$. It equals $G(\vec x,\cdot)$ in $L^2(D)$, and
+so everywhere, and hence $g(\vec x)=\sum_j\lambda_j\phi_j(\vec x)^2=G(\vec x,\vec x)$ is
+continuous.
+\end{itemize}
    \item[p23, p24] In Examples 1.83 and 1.84, the eigenvalue problems are
-printed with $\frac{d\phi_j^{2}}{dx^{2}}$ (resp.\ $\frac{d\phi^{2}}{dx^{2}}$).
-These should read $\frac{d^{2}\phi_j}{dx^{2}}$ (resp.\
-$\frac{d^{2}\phi}{dx^{2}}$).
+printed with $\frac{d\phi_j^{2}}{dx^{2}}$ and $\frac{d\phi^{2}}{dx^{2}}$, which
+should read $\frac{d^{2}\phi_j}{dx^{2}}$ and $\frac{d^{2}\phi}{dx^{2}}$.
 
-   \item[p29] In (1.33), the first identity requires the conjugate transpose
+   \item[p27] Proposition 1.93 holds only for periodic functions: the norm of
+$H^r(-\pi,\pi)$ is equivalent to $\|u\|_{r/2}$ for
+$u\in\mathcal{D}(A^{r/2})$, and the proof should start ``For
+$u\in\mathcal{D}(A^{r/2})$''.
+   \item[p29] In (1.33), the first identity requires the conjugate transpose (missing conjugation)
 and should read
 \[
 \widehat{\vec u}^{\,*}\widehat{\vec v} = d\,\vec u^{\,*}\vec v,
 \]
-where ${}^{*}$ denotes the conjugate transpose. As printed, with the transpose
-${}^{\mathsf{T}}$, the identity fails even for real vectors: for $d=4$,
-$\vec u=[1,1,0,0]^{\mathsf{T}}$ and $\vec v=[1,-1,0,0]^{\mathsf{T}}$ give
-$\vec u^{\mathsf{T}}\vec v=0$ but
-$\widehat{\vec u}^{\,\mathsf{T}}\widehat{\vec v}=4$. The accompanying identity
-$\|\widehat{\vec u}\|_2=\sqrt{d}\,\|\vec u\|_2$ is correct.
+where ${}^{*}$ denotes the conjugate transpose. 
    \item[p29] For real data $\vec u\in\mathbb{R}^d$, the symmetry of the DFT
 should read $\hat u_\ell = \overline{\hat u_{d+2-\ell}}$ (indices modulo $d$),
 not $\hat u_\ell=\overline{\hat u_{d-\ell}}$. The latter is correct only under
 the convention $\ell=0,\dots,d-1$, whereas the book indexes
-$\ell=1,\dots,d$. For example, $d=4$ and $\vec u=[1,2,3,4]^{\mathsf{T}}$ give
-$\widehat{\vec u}=[10,-2+2\mathrm{i},-2,-2-2\mathrm{i}]^{\mathsf{T}}$, so that
-$\hat u_2=\overline{\hat u_4}$.
+$\ell=1,\dots,d$.
    \item[p32] In the example following Lemma 1.100, the sentence should read
 that $\|I_Ju\|_{{L}^2}$ and $\|I_Ju\|_{{H}^1}$ provide estimates of
 $\|u\|_{{L}^2}$ and $\|u\|_{{H}^1}$ (not of $\|u\|_{{H}^1}$ and
-$\|u\|_{{H}^2}$), in agreement with the displayed equations that follow and
-with the caption of Figure 1.5.
+$\|u\|_{{H}^2}$).
+   \item[p32] In Lemma 1.100, the bound holds with $K/J$ in place of
+$K/J^{1/2}$. The stated bound is true but not sharp. See  Exercise 1.23(b).
+   \item[p32] In the example following Lemma 1.100, the second display should
+read
+\[
+\|I_Ju\|_{H^1(a,b)}=\Bigl(\|I_Ju\|^2_{L^2(a,b)}+(b-a)\sum_{k=-J/2+1}^{J/2}
+\frac{(2\pi k)^2}{(b-a)^2}|U_k|^2\Bigr)^{1/2},
+\]
+with $\|I_Ju\|_{L^2}$, not the unknown $\|u\|_{L^2}$, inside the bracket.
    \item[p34] In Theorem 1.107 (Hankel transform), the constant in the case
 $d=3$ should be $\sqrt{2/\pi}$ and not $\sqrt{2\pi}$:
 \[
@@ -133,11 +183,52 @@ $4\pi/(2\pi)^{3/2}=\sqrt{2/\pi}$. It is also consistent with the case $d=1$.
 transform of the derivative equals $\mathrm{i}\lambda$ times the Fourier
 transform (not ``the derivative of the Fourier transform''), in agreement with
 the preceding display $\widehat{u'}(\lambda)=\mathrm{i}\lambda\hat u(\lambda)$.
+   \item[p38] In Exercise 1.23, the interval should be $(0,1)$ throughout, not
+$(0,2\pi)$. Then $P_J$ projects onto
+$\operatorname{span}\{\mathrm{e}^{2\pi\mathrm{i}jx}\colon j=-J/2+1,\dots,J/2\}$
+as printed, and $u_1$ of Figure 1.6 is defined on this interval.
+
+In Part (c), the final rate should read
+\[
+\|u_1\|_{{H}^1(0,1)}-\|I_Ju_1\|_{{H}^1(0,1)}=\mathcal{O}(J^{-4}),
+\]
+(the printed bound is correct but sub-optimal).
+
+The first bound in Part (c) should require $0<2r<p$, not
+$0<2r\le p$. At $2r=p$, the aliasing sum is of order $\log J$ and the rate
+becomes $\mathcal{O}(J^{-(1+p)}\log J)$. 
+
+   \item[p39] In Exercise 1.28, ``Making use of DCT-1, evaluate $u^N(x)$ at
+$x=(k-1)\pi/(N-1)$'' should read $v^N(x)$, the function defined immediately
+above and plotted in the same sentence.
    \end{description}
  \item%C2
    \begin{description}
+   \item[p41] In Example 2.3, the formula for the solution requires $p,q>0$:
+``If $p$, $q$ and $f$ are constants with $p,q>0$''. It divides by $q$ and
+involves $\sqrt{q/p}$, whereas Assumption 2.1 allows $q=0$.
    \item[p42] Figure 2.1 is misprinted.
+   \item[p42] In the derivation of the weak form, the test function should be
+$\phi\in\mathrm{C}^\infty_c(a,b)$, not $\mathrm{C}^\infty_c([a,b])$. Functions in
+$\mathrm{C}^\infty_c([a,b])$ need not vanish at $a$ and $b$, and
+$\phi(a)=\phi(b)=0$ is used immediately afterwards.
+   \item[p44] $\ell$ is a bounded linear \emph{functional} on
+$H^1_0(a,b)$, not a bounded linear operator, as in the Lax--Milgram lemma.
+   \item[p47] The Galerkin projection $P_G$ is the orthogonal projection onto
+$\tilde V$ with respect to the energy inner product $a(\cdot,\cdot)$, not the
+$H^1_0(a,b)$ inner product; this is what the best-approximation property in the
+energy norm expresses.
+   \item[p48] In the proof of Lemma 2.20, the eigenfunctions form an
+orthonormal basis for $G$, the \emph{closure} of the range of $L$ (see the
+entry for p20), which need not be all of $L^2(a,b)$. By Theorem 1.37, every
+$u\in L^2(a,b)$ is $u=p+q$ with $p\in G$ and $q\in G^\perp$, so it suffices to
+show $G^\perp=\{0\}$. If $f\in G^\perp$, then $\langle f,\phi_j\rangle=0$ for
+all $j$, so $Lf=0$ by (1.21) and hence $f=ALf=0$.
+   \item[p49] In Example 2.22,  the odd-periodic extension of $f$ must be analytic (rather than  $f$ itself).
    \item[p56] In the first displayed equation of the proof, the first term in the integrand should be $p(x)(e(x)')^2$ (the $e(x)$ has one too many dashes).
+   \item[p57] In the proof of Theorem 2.32, the step to (2.44) uses $h^4\le h^2$,
+that is $h\le1$. On a general interval $(a,b)$, either assume $h\le1$ or
+replace $\|q\|_\infty/\pi^4$ by $(b-a)^2\|q\|_\infty/\pi^4$.
    \item[p62] In the proof of Theorem 2.43, the displayed bound following (2.60)
 should read
 \[
@@ -149,27 +240,56 @@ gives on dividing by $|u_{0}|_{H^{1}(D)}$, and it is needed for the constant
 $K\coloneq\max\{K_{\mathrm p}a_{\min}^{-1},\,K_{\gamma}(1+a_{\max}a_{\min}^{-1})\}$
 stated in the theorem: combining it with $|u_{g}|_{H^{1}(D)}\le K_{\gamma}\|g\|_{H^{1/2}(\partial D)}$
 from (2.54) reproduces exactly that $K$.
+
    \item[p79] The right-hand side of (2.109) should be $c_1|\hat u - I_h\hat u|^2_{H^2(\Delta^*)}$.
 
    Assumption 2.64 in general can only be verified for constant boundary data $g$; $H^2$-regularity results
 usually include an extra term on the right-hand side to account for $g\ne 0$ -- see (Renardy and Rogers,
 2004, Theorem 8.53) or (McLean, 2000, Theorem 4.10).
 
-   \item[p84] In Exercise 2.11(b), the inequality holds as stated but does not
-follow by the method of part (a): Exercise 1.14(a) applies to functions
-vanishing at an endpoint, and $e'$ need not vanish at either endpoint of
-$(0,h)$. Since $e(0)=e(h)=0$, Rolle's theorem gives $\xi\in(0,h)$ with
-$e'(\xi)=0$; writing $e'(y)=\int_{\xi}^{y}e''(s)\,\mathrm{d}s$ and applying the
-Cauchy--Schwarz inequality then gives the bound with constant $1$.
+   \item[p79] ``$u$ is not guaranteed to be continuous and so neither is
+$I_hu$'': the interpolant $I_hu$ is piecewise linear and continuous by
+construction. The difficulty is that the point values of $u$ used in (2.105)
+need not be defined.
+
+   \item[p83] In Exercise 2.4(a), the jump (2.114) is taken across $x=y$ and is
+better written
+\[
+\bigl[G'(x,y)\bigr]_{x=y_-}^{x=y_+}=\frac{-1}{p(y)},
+\]
+that is, the limit of $G'(y+\epsilon,y)-G'(y-\epsilon,y)$ as $\epsilon$
+approaches $0$ from above. As printed, $G'$ denotes $\partial G/\partial x$ but
+the two limits are taken in the second argument, so the sentence does not
+describe the quantity being computed: the derivation integrates the equation
+over $x\in[y-\epsilon,y+\epsilon]$ at fixed $y$. Symmetry of $G$ makes the two
+expressions agree numerically, so nothing that follows is affected.
+   \item[p83] In Exercise 2.6, the element matrix should be
+$\frac{p}{3h}\begin{pmatrix}7&-8&1\\-8&16&-8\\1&-8&7\end{pmatrix}$, with the
+factor $p$; equivalently, take $p=1$.
+
    \end{description}
  \item%C3 
    \begin{description}
-   \item[p97] In Example 3.13, the Fourier transform of $u_x$ should be
+   \item[p98] In Example 3.13, the Fourier transform of $u_x$ should be
 $\widehat{u_x}(\lambda)=\mathrm{i}\lambda\widehat{u}$ and not
 $-\mathrm{i}\lambda\widehat{u}$. This is the identity derived in Example 1.105,
 from which it is quoted. Equation (3.25) is unaffected, since the symbol is
 squared.
  
+   \item[p98] In Example 3.14, $\mathrm{C}(\mathbb{R})$ with the supremum norm is
+not a Banach space, since it contains unbounded functions. The semigroup should
+be defined on the bounded, uniformly continuous functions, as in the Notes
+(p132).
+   \item[p99] In Example 3.16, $\hat u_0(\lambda)$ is complex-valued, and the
+display for $\|u(t)-u_0\|$ should contain $|\hat u_0(\lambda)|^2$ in place of
+$\hat u_0(\lambda)^2$.
+   \item[p101] The proof of Lemma 3.21 shows only that the generator $G$ of
+$\mathrm{e}^{-tA}$ extends $-A$, that is $\mathcal{D}(A)\subset\mathcal{D}(G)$
+and $Gu=-Au$ there. For the reverse inclusion, let $u\in\mathcal{D}(G)$ and
+$w=Gu$. Taking the inner product of $(\mathrm{e}^{-hA}u-u)/h$ with $\phi_j$ and
+letting $h\downarrow0$ gives $\langle w,\phi_j\rangle=-\lambda_j\langle
+u,\phi_j\rangle$. So $\sum_j\lambda_j^2\langle u,\phi_j\rangle^2=\|w\|^2<\infty$
+and $u\in\mathcal{D}(A)$.
    \item[p105] In the proof of Lemma 3.30, the displayed bound should read
 \[
 \int_D \tilde f(u(\vec x))^2\,d\vec x \le (L')^2\int_D \bigl(1+\lvert u(\vec x)\rvert\bigr)^2\,d\vec x,
@@ -179,23 +299,27 @@ of the Lipschitz constant $L$. As printed, with $(1+u(\vec x))^2$, the
 inequality fails for negative $u$: for $\tilde f(r)=r$ (Lipschitz with $L=1$)
 and $u\equiv-1$ the left-hand side is $\lvert D\rvert$ and the right-hand side
 is $0$.
+   \item[p105] Proposition 3.31 requires $\epsilon\in(0,1]$ (the proof applies
+Lemma 3.22(c) with $\alpha=1-\epsilon$), and its proof uses $t_2-t_1\le1$ when
+it combines the terms. For $t_2-t_1$ up to $T$, the constant should carry a
+factor such as $(1+T^{\epsilon})$.
    \item[p107] In (3.46) the remainder term should be $\varepsilon\, r_j(t)$, and
 correspondingly the last term of (3.47) should be $\varepsilon\,\vec r(t)$. The
 remainder $r_j$ is defined in (3.45) as that of the difference approximation of
 $u_{xx}$, which is multiplied by $\varepsilon$ on substitution into (3.44). The
 $O(h^2)$ conclusion is unchanged.
+   \item[p107] Taylor's theorem is applied to $u(t,\cdot)\in\mathrm{C}^4([0,a])$;
+the problem is posed on $(0,a)$, not $\mathbb{R}$.
    \item[p115] In (3.71) and (3.72), the factor should be
 $(1+\Delta t\,\lambda_j)^{-1}$ and not $(1+\Delta t\,\varepsilon\lambda_j)^{-1}$.
 The eigenvalues are defined in Example 3.39 as $\lambda_j=\varepsilon j^2$, so
 the $\varepsilon$ is already included; as printed the factor is
 $(1+\Delta t\,\varepsilon^2 j^2)^{-1}$. Compare the general scheme (3.68), the
 system (3.70), and Algorithm 3.5, all of which carry a single $\varepsilon$.
-   \item[p116] \texttt{meshgrid} is misused in Example 3.40 and Algorithm 3.6. See \texttt{exa\_3.40.m}.
-In consequence Figure 3.5(b) was computed not from the stated initial data
-$u_0=\sin(x_1)\cos(\pi x_2/8)$ but from $\sin(x_2)\cos(\pi x_1/8)$, which jumps
-by $1.78$ and $0.29$ across the two periodic boundaries and so cannot have been
-intended. The online code now uses the stated data and therefore no longer
-reproduces the printed figure.
+   \item[p116] In Example 3.40, Figure 3.5(b) was computed not from the stated
+initial data $u_0=\sin(x_1)\cos(\pi x_2/8)$ but from $\sin(x_2)\cos(\pi x_1/8)$,
+which jumps by $1.78$ and $0.29$ across the two periodic boundaries and so cannot
+have been intended.
    \item[p116] In Example 3.40, the eigenvalues are likewise defined to include
 the diffusion coefficient,
 $\lambda_{j_1,j_2}=\varepsilon((2\pi j_1/a_1)^2+(2\pi j_2/a_2)^2)$. The
@@ -203,10 +327,17 @@ right-hand side of (3.73) should therefore be
 $-\lambda_{j_1,j_2}\widehat{u}_{j_1,j_2}+\widehat{f}_{j_1,j_2}$, and the entries
 of $M$ should be $m_{i,j}=\lambda_{j_1,j_2}$, in both cases without the
 additional $\varepsilon$. Algorithm 3.6 uses a single $\varepsilon$.
+   \item[p118] In the proof of Lemma 3.42, the factor inside the modulus should
+read $(1+x)^{-1}-\mathrm{e}^{-x}$, which is non-negative, rather than
+$\mathrm{e}^{-x}-(1+x)^{-1}$.
    \item[p119] In the caption of Algorithm 3.7, the spacing of the returned grid
 should be $h_{\mathrm{ref}}=a/J_{\mathrm{ref}}$ and not $1/J_{\mathrm{ref}}$,
 the domain being $D=(0,a)$.
 
+   \item[p123] In Example 3.45, $T=1$ and $N=10^4$ give $\Delta t=10^{-4}$,
+not $0.001$. The computations use $\Delta t=10^{-4}$.
+   \item[p126] In Example 3.49, the error is defined as $e\coloneq u_h-u$ but
+used later as $e=u-u_h$; define $e\coloneq u-u_h$ throughout.
    \item[p127] In the proof of Lemma 3.51, the second application of Young's
 inequality should read
 \[
@@ -215,6 +346,64 @@ inequality should read
 the right-hand side carrying the same arguments as the left; as printed it reads
 $s^2\|\rho(t)\|^2+\|e(t)\|^2$. The display that follows carries the correct
 terms and the conclusion is unaffected.
+   \item[p127] In the proof of Lemma 3.51, multiplying by $t$ gives
+$\frac{d}{dt}(t\|e\|^2)=t\frac{d}{dt}\|e\|^2+\|e\|^2$, so a term $+\|e(t)\|^2$
+is missing from the differential inequality and from (3.93). Carrying it
+through gives $3\|e(s)\|^2$ and then $4\|\rho(s)\|^2$ in the next two displays,
+and the constant in the lemma becomes $\sqrt{12}$ in place of $\sqrt{10}$.
+   \item[p128] The proof of Proposition 3.52 is valid only for $\gamma=1$. For
+$\gamma<1$, the bounds on $\|\rho(s)\|$ and $s\|d\rho/ds\|$ blow up as
+$s\to0$, so the supremum in Lemma 3.51 is infinite.
+\begin{itemize}
+\item For $\gamma\in[0,1]$, (3.94) is true and follows from the $t$-weighted
+energy estimate
+\[
+\|e(t)\|\le\frac{15}{t}\sup_{0<s\le t}\Bigl(\|\hat\rho(s)\|+s\|\rho(s)\|
++s^2\Bigl\|\frac{d\rho}{ds}(s)\Bigr\|\Bigr),\qquad
+\hat\rho(t)\coloneq\int_0^t\rho(s)\,ds,
+\]
+(Thom\'ee, \emph{Galerkin Finite Element Methods for Parabolic Problems},
+2006, Lemma 3.4) together with
+$\hat\rho(t)=(A^{-1}-\tilde A^{-1})(I-\mathrm{e}^{-tA})u_0$ and Lemma 3.22(c).
+\item For $\gamma=-\alpha<0$ and finite elements, (3.94) is false. Write
+$e(t)=E(t)u_0$. The operator $E(t)$ is self-adjoint on $H$, so
+$\sup_{\|u_0\|_{-1/2}\le1}\|e(t)\|=\|A^{1/2}E(t)\|_{\mathcal{L}(H)}$, which is
+the $H^1_0(D)$ error for $L^2$ data. For piecewise linear elements this is of
+order $h$, not $h^2$. The correct bound for $\alpha\in[0,1/2]$ is
+\[
+\|e(t)\|\le K\frac{\delta^{2-2\alpha}}{t}\|u_0\|_{-\alpha}.
+\]
+The original bound $\delta^2t^{-(1+\alpha)}\|u_0\|_{-\alpha}$ does hold for the
+spectral Galerkin method.
+\end{itemize}
+   \item[p128] In the proof of Proposition 3.53, the bound
+$\|\tilde P u\|\le C^\alpha\delta^{-2\alpha}\|u\|_{-\alpha}$ does not follow
+from (3.86) and Exercise 3.20. These give
+$\|v\|\le C^\alpha\delta^{-2\alpha}\|v\|_{-\alpha}$ only for $v\in\tilde V$,
+and nothing bounds $\|\tilde Pu\|_{-\alpha}$ by $\|u\|_{-\alpha}$. Assume
+instead the inverse estimate $\|A^{1/2}v\|\le C\delta^{-1}\|v\|$ for
+$v\in\tilde V$, which holds for the spectral Galerkin method and for finite
+elements on quasi-uniform meshes (see, for example, Brenner and Scott,
+\emph{The Mathematical Theory of Finite Element Methods}, \S4.5). For
+$\alpha\in[0,1/2]$, Exercise 3.20 gives
+$\|A^\alpha v\|\le C^{2\alpha}\delta^{-2\alpha}\|v\|$ on $\tilde V$ and, as
+$\tilde P$ is the orthogonal projection,
+\[
+\|\tilde Pu\|=\sup_{v\in\tilde V}\frac{\langle A^{-\alpha}u,A^{\alpha}v\rangle}{\|v\|}
+\le C^{2\alpha}\delta^{-2\alpha}\|u\|_{-\alpha}.
+\]
+So (3.96), and (3.98) in Theorem 3.54, hold for $\alpha\in[0,1/2]$.
+
+Separately, the extension of (3.95) to $\gamma\in(0,1)$ cannot apply Exercise
+3.20 to $T_n\tilde P$ directly, as $T_n\tilde P$ does not commute with $A$ (see
+the entry for p136). Instead, by duality,
+$\|T_n\tilde PA^{-\gamma}\|=\|A^{-\gamma}(T_n\tilde P)^*\|$, and the first
+inequality of Exercise 3.20, with $A^{-1}$ in place of $A$ and applied to
+$(T_n\tilde P)^*w$, gives
+$\|T_n\tilde PA^{-\gamma}\|\le\|T_n\tilde PA^{-1}\|^{\gamma}\|T_n\tilde
+P\|^{1-\gamma}$. This inequality is also Theorem 6.10 in \S2.6 of
+Pazy, \emph{Semigroups of Linear Operators and Applications to Partial
+Differential Equations}, 1983.
    \item[p129] In Theorem 3.54, the quantifier in (3.98) should read
 $\forall u_0\in\mathcal{D}(A^{-\alpha})$ and not
 $\forall u_0\in\mathcal{D}(A^{\alpha})$. The bound is stated in terms of
@@ -223,6 +412,13 @@ $u_0\in\mathcal{D}(A^{-\alpha})$. The distinction matters: as noted on p128,
 $\mathcal{D}(A^{-\alpha})$ admits data that need not belong to $H$, and it is
 that case which is required for space--time white noise forcing later in the
 book.
+
+(3.98) should be stated for
+$\alpha\in[0,1/2]$, and for finite elements its second term
+$\delta^2/t_n^{1+\alpha}$ should read $\delta^{2-2\alpha}/t_n$ (see the entry
+for p128). The application in Chapter 10, with $\Delta t=\delta^2$ and
+$\alpha=(1-\zeta)/2$, gives the same rate $\Delta t^{\zeta}$ with the corrected
+bound.
    \item[p132] Following the comment on p487 below, the last line of the proof should be
 \[
 \|u(t_n) - \tilde u_n \|\le E\,\exp(L n \Delta t).
@@ -231,6 +427,9 @@ book.
 analytic semigroup is analytic on $(0,\infty)$, and not on $[0,\infty)$, for
 $u\in X$. Analyticity at $t=0$ would require $u\in\mathcal{D}(A^n)$ for every
 $n$; for general $u\in X$ the mapping is only strongly continuous there.
+   \item[p132] In the Notes, a sectorial operator is one whose
+\emph{spectrum} lies in a sector of the complex plane, with a resolvent bound
+outside it, not merely one whose eigenvalues do.
    \item[p134] Exercise 3.4 requires $b>0$. For $b<0$ the stated conclusion is
 false: take $a=0$, $b=-1$, $z_0=1$, and $z(t)=1/10$ for $t\in[0,9]$,
 $z(t)=\mathrm{e}^{-(t-9)}/10$ for $t\ge9$. Then $z$ satisfies (3.102) for all
@@ -249,15 +448,21 @@ Exercise 3.10, where $\Delta t_1=0.01$ and $\Delta t_0=0.1$.
 the first-order system evolves, not the domain of the generator; the phrase
 should read ``in the space $H=H^1_0(D)\times L^2(D)$''. The domain is the
 smaller set $\mathcal{D}(A)=(H^2(D)\cap H^1_0(D))\times H^1_0(D)$.
+   \item[p135] In Exercise 3.11, the first-order system is a \emph{linear}
+equation $d\vec u/dt=-A\vec u$, not a semilinear one.
    \item[p136] In Exercise 3.20, the second inequality requires that $B$ commute
 with $A$ (for instance, that $B$ be a function of $A$); it is false for general
-$B\in\mathcal{L}(H)$. Take $H=\mathbb{R}^2$, $A=\mathrm{diag}(1,4)$,
-$\alpha=1/2$, $B=\begin{pmatrix}1&1\\0&0\end{pmatrix}$ and
-$u=[1,-1/4]^{\mathsf{T}}$. Then $BAu=0$, so the right-hand side is $0$, while
-$BA^{1/2}u=[1/2,0]^{\mathsf{T}}$ gives $\|BA^{1/2}u\|=1/2$.
+$B\in\mathcal{L}(H)$. 
 \end{description}
- \item%C4  
+ \item%C4
    \begin{description}
+   \item[p145] ``Uncorrelated random variables are not independent in general,
+except in the special case of Gaussian random variables'' is false as stated:
+two uncorrelated Gaussian random variables need not be independent. Take
+$X\sim\mathrm{N}(0,1)$ and $Y=SX$ with $S=\pm1$ equally likely and independent
+of $X$; then $Y\sim\mathrm{N}(0,1)$ and $\mathrm{Cov}(X,Y)=0$, but $|Y|=|X|$. It
+should read ``\dots except when they are the components of a multivariate
+Gaussian random variable (see Lemma 4.33)''.
    \item[p156] In Example 4.51 (conditional Gaussian), the normalising constant
 of the pdf of $\vec X$ should read $1/\sqrt{(2\pi)^{n+m}\det Q}$, and each
 exponent should carry a factor $1/2$, in accordance with (4.13); the first
@@ -272,13 +477,23 @@ makes the conditional density of $\vec X_2$ given $\vec X_1=\vec y$ proportional
 to $\mathrm{e}^{-(\vec x_2-\widehat{\vec\mu}_2)^{\mathsf{T}}\overline{Q}_{22}^{-1}(\vec x_2-\widehat{\vec\mu}_2)}$,
 which is the density of $\mathrm{N}(\widehat{\vec\mu}_2,\overline{Q}_{22}/2)$
 and not $\mathrm{N}(\widehat{\vec\mu}_2,\overline{Q}_{22})$ as concluded.
+   \item[p156] In Example 4.51, the conditioned vector is $\vec X_2$, not
+$\vec X$: the display should read
+$\mathbb{P}(\vec X_2\in G\,|\,\vec X_1=\vec y)=\frac{1}{p_{\vec X_1}(\vec y)}\int_G p_{\vec X}(\vec y,\vec x_2)\,d\vec x_2$,
+with $G\subset\mathbb{R}^m$, and the next sentence should refer to ``the density
+of $\vec X_2$ given $\vec X_1=\vec y$''.
    \item[p159] Nensen’s inequality → Jensen’s inequality (in proof of Theorem 4.58(iii)).
    \item[p159] In the proof of Lemma 4.57 (Borel--Cantelli), the last sentence
 should read: for $\omega\notin E$, $|X_n(\omega)|>1$ for only finitely many $n$,
 so $|X_n(\omega)|\le 1$ for all $n\ge n^*(\omega)$; since $\prob(E)=0$, (4.22)
-holds. The assertion $\prob(n^*=1)=0$ does not follow and is false in general:
-if $X_n=0$ for all $n$, then $\sum_{n=1}^{\infty}\prob(F_n)=0<\infty$ and
-$n^*=1$ everywhere, so $\prob(n^*=1)=1$, while (4.22) holds.
+holds. The assertion $\prob(n^*=1)=0$ does not follow  in general.
+   \item[p163] Theorem 4.63 holds only for $\epsilon<\lambda_{\min}$, the smallest
+eigenvalue of $C_X$, not for every $\epsilon>0$. For larger $\epsilon$, the
+$\epsilon$-ball about $C_X$ contains positive-definite $C_Y$ arbitrarily close to
+singular, and no uniform $L$ exists.  With
+$\epsilon<\lambda_{\min}$, every admissible $C_Y\ge(\lambda_{\min}-\epsilon)I$ is
+positive definite, and the second-order remainder in the proof is bounded
+uniformly, which is what the choice of $L$ needs.
    \item[p168] In the caption of Algorithm 4.7, \texttt{M} is the number of
 trials required to obtain \texttt{X}, and not the number of rejections: the
 counter is incremented on the accepted draw as well, so the number of rejections
@@ -286,20 +501,19 @@ is \texttt{M-1}.
    \item[p174] In the first display of the Monte Carlo error analysis,
 $\overline{X}_{N}$ should read $\overline{X}_{M}$, the sample average being taken
 over the $M$ Monte Carlo samples ($N$ is the number of time steps).
-   \item[p177] In Algorithm 4.10, the reported confidence radius \texttt{sig95}
-does not account for the correlation between antithetic pairs. The call
-\texttt{monte(u(:,1))} treats the $2M$ pooled values as independent and returns
-$2\,\mathrm{std}/\sqrt{2M}$, which is the confidence radius for
-$\overline{X}_{2M}$. For the antithetic estimator
-$(\overline{X}_{M}+\overline{X}^{\mathrm{a}}_{M})/2$ it should be computed from
-the pair averages
-$Y_j=\bigl(\phi(\vec u_{N,j})+\phi(\vec u^{\mathrm{a}}_{N,j})\bigr)/2$, as
-$2\,\mathrm{std}(Y)/\sqrt{M}$. The reported point estimate is correct.
+   \item[p175] The quasi-Monte Carlo rate is misstated. ``The error is reduced
+from $O(M^{-1/2})$ to $O(M^{-2})$ as shown in Exercise 4.24'' should read ``to
+$O(M^{-n})$ for every $n$ when $M=3^p$''. Exercise 4.24 proves this stronger
+rate, but only for $M=3^p$. For general $M$, the van der Corput sequence gives only
+$O(M^{-1}\log M)$, so the restriction to $M=3^p$ is essential.
    \item[p178] In Exercise 4.5, the moments should read
 $\mathbb{E}\bigl[|X|^{k}\bigr]=\infty$ for $k\ge 1$. For
 $X\sim\mathrm{Cauchy}(0,1)$ and $k$ odd, $\mathbb{E}[X^{k}]$ is undefined rather
 than infinite, since
 $\mathbb{E}\bigl[(X^{k})^{+}\bigr]=\mathbb{E}\bigl[(X^{k})^{-}\bigr]=\infty$.
+   \item[p179] In Exercise 4.17, $\epsilon$ must satisfy $0<\epsilon<\sigma_X^2$, for
+the reason given for Theorem 4.63 (p163): otherwise $\sigma_Y^2$ may approach $0$
+and no uniform $L$ exists.
    \item[p179]  Bayes' theorem is due to the Reverend Thomas
      Bayes and the apostrophe is written after and not, as in
      Exercise 4.11, before the s. In the same exercise,
@@ -318,6 +532,14 @@ X_{\lfloor t_{i+1}N\rfloor}-X_{\lfloor t_{i}N\rfloor}
 \]
 to match the convention $X_{n}=\sum_{j=1}^{n}\xi_{j-1}$ used in the proof of
 Lemma 5.5.
+   \item[p185] In the proof of Lemma 5.8, the first term of (5.6),
+$N^{-1/2}[X_{\lfloor t_1N\rfloor},\dots,X_{\lfloor t_MN\rfloor}]^{\mathsf{T}}$, is
+not an affine transformation of the $M-1$ increments (5.5) with
+$A\in\mathbb{R}^{M\times(M-1)}$: $X_{\lfloor t_1N\rfloor}$ cannot be recovered
+from increments that start at $t_1$. Set $t_0=0$ and include the first increment
+$X_{\lfloor t_1N\rfloor}-X_0$, so that (5.5) has $M$ independent components; then
+$A\in\mathbb{R}^{M\times M}$ is the lower-triangular matrix of ones, and the rest
+of the proof is unchanged.
 
    \item[p188] In (5.12), the exponent should read
 $\mathrm{e}^{-(x-x_{j})^{2}/2t_{n}}$, with a minus sign, as in (5.13).
@@ -326,25 +548,23 @@ $C(s,t)=\bigl(|t|^{2H}+|s|^{2H}-|t-s|^{2H}\bigr)/2$, matching the definition of
 fBm in \S5.3.2 and the factor \texttt{0.5} used in Algorithm 5.3
 (\texttt{fbm.m}). The stated conclusion that $C_{N}$ is singular is unaffected,
 since $C(0,t)=0$ for either version.
-   \item[p201] In the display bounding
-$|\mathbb{E}[\phi(\vec X)]-\mathbb{E}[\phi(\widehat{\vec X})]|$, the Frobenius
-norm should appear to the first power, as in Theorem 4.63, so that the
-right-hand side reads
+   \item[p201] The display bounding
+$|\mathbb{E}[\phi(\vec X)]-\mathbb{E}[\phi(\widehat{\vec X})]|$ by a multiple of
+$\|\phi\|_{L^{2}(\mathbb{R}^{N})}$ is not justified, and no bound of that form holds:
+Theorem 4.63 needs both covariance matrices positive definite (with
+$\epsilon<\lambda_{\min}(C_N)$, see p163), whereas $C_n$ has rank $n<N$. As
+$\widehat{\vec X}$ lives on an $n$-dimensional subspace, a narrow bump $\phi$ centred
+there has small $L^2$ norm but $\mathbb{E}[\phi(\widehat{\vec X})]$ of order one. For
+$\phi$ with bounded second derivatives, write $\vec X=\widehat{\vec X}+\vec Z$ with
+$\vec Z=\sum_{j=n+1}^N\sqrt{\nu_j}\,\vec u_j\xi_j$ independent of
+$\widehat{\vec X}$ and of mean zero; Taylor's theorem then gives
 \[
-K\,\|\phi\|_{L^{2}(\mathbb{R}^{N})}\|C_{n}-C_{N}\|_{F}
-=K\,\|\phi\|_{L^{2}(\mathbb{R}^{N})}
-\Bigl(\sum_{j=n+1}^{N}\nu_{j}^{2}\Bigr)^{1/2}.
+|\mathbb{E}[\phi(\vec X)]-\mathbb{E}[\phi(\widehat{\vec X})]|
+\le\tfrac12\sup_{\vec x}\|D^2\phi(\vec x)\|_2\sum_{j=n+1}^{N}\nu_j,
 \]
-The estimate holds for $\phi$ bounded and continuous, rather than for all
-$\phi\in L^{2}(\mathbb{R}^{N})$, because $C_{n}$ is singular. It follows by
-extending Theorem 4.63 to positive-semi-definite $C_{Y}$ under this additional
-assumption on $\phi$: regularise $C_{n}$ by $C_{n}+\delta I$ with
-$\delta\downarrow0$, apply Theorem 4.63 (whose constant depends only on $C_{N}$
-and $\|C_{n}-C_{N}\|_{F}$), and pass to the limit using
-$\widehat{\vec X}+\delta^{1/2}\vec Z\Rightarrow\widehat{\vec X}$ in
-distribution.
+the same order as the mean-square error.
 
-   \item[p203] The statement ``If the process is Gaussian'' in Theorem 5.28
+   \item[p202] The statement ``If the process is Gaussian'' in Theorem 5.28
 admits two readings. In the sense of Definition 4.38 ($H$-valued Gaussian, with
 $H=L^2(\mathcal{T})$), $X$ Gaussian means $\langle X,\phi\rangle$ is a
 real-valued Gaussian random variable for every $\phi\in H$. Since
@@ -373,11 +593,22 @@ linear functional, hence Gaussian; that is, $X$ is an $H$-valued Gaussian in the
 sense of Definition 4.38 (see, e.g., Bogachev, \emph{Gaussian Measures}, 1998,
 Proposition~2.3.9), which returns to the first case.
 
-\item[p204] The equality in (5.39) 
- follows from the uniform-in-time Mercer convergence in
-  Theorem~5.29.
+   \item[p202, p203] In Theorem 5.28 and its proof, three corrections are needed.
+(i) The sums should run over $j$ with $\nu_j>0$ only: for $\nu_j=0$,
+$\xi_j=\gamma_j/\sqrt{\nu_j}$ is undefined, and $\gamma_j=0$ a.s.\ since
+$\mathrm{Var}\,\gamma_j=\nu_j$. (ii) The theorem concludes $\xi_j\sim\mathrm{N}(0,1)$ iid, but
+the proof concludes only ``pairwise independent'' from Lemma 4.33. The proof of
+Lemma 4.33 factorises the joint density and so gives (mutual) independence,
+which is what ``iid'' requires; both should read ``independent''. (iii) The bound
+$\|X_J(t,\omega)\|_{L^2(\mathcal T)}\le\|X(t,\omega)\|_{L^2(\mathcal T)}$ from
+Lemma 1.41 holds for $\mu=0$ but need not hold otherwise. Instead,
+$X-X_J=(I-P_J)(X-\mu)$ gives
+$\|X-X_J\|_{L^2(\mathcal T)}\le\|X-\mu\|_{L^2(\mathcal T)}$, and Exercise
+4.13(b) applies.
 
 
+   \item[p204] The equality in (5.39) follows from the uniform-in-time Mercer convergence in
+Theorem~5.29.
    \item[p207] In Definition 5.31, the identity should read
 \[
 \|X(t+h)-X(t)\|_{L^{2}(\Omega)}
@@ -385,6 +616,22 @@ Proposition~2.3.9), which returns to the first case.
 \quad\text{as }h\to0,
 \]
 with the exponent $1/2$, as in Definition 5.33.
+   \item[p209] Proposition 5.37 claims $|C_X(s,t)-C_I(s,t)|\le K\Delta t^2$ in
+(5.47), but its proof gives only first order: (5.48) is
+$\|X(t)-I(t)\|_{L^2(\Omega)}\le K\Delta t$, and the Cauchy--Schwarz step then
+gives $|C_X(s,t)-C_I(s,t)|\le K'\Delta t$. ``The estimate (5.47) follows from
+(5.48)'' is therefore false. Under mean-square differentiability alone, the
+second-order rate is not established. It does hold under the hypothesis of
+Corollary 5.38, $C_X\in\mathrm{C}^2(\mathcal T\times\mathcal T)$ with
+$\mathcal T$ closed and bounded. Since $I(s)=\sum_a w_a(s)X(t_a)$ with
+hat-function weights, $C_I(s,t)=\sum_{a,b}w_a(s)w_b(t)C_X(t_a,t_b)$ is the
+tensor-product piecewise-linear interpolant of $C_X$. Interpolating first in $s$
+and then in $t$ (the weights are convex) gives, uniformly in $s,t$,
+\[
+|C_X(s,t)-C_I(s,t)|\le\frac{\Delta t^2}{8}\Bigl(\sup|\partial_s^2C_X|+\sup|\partial_t^2C_X|\Bigr).
+\]
+Corollary 5.38 (p210) and the application on p240, where the covariance
+$\tilde c_R$ is smooth, are correct with this version.
    \item[p210] In the proof of Proposition 5.37, the display
 following the appeal to Definition 5.33 should use the difference quotient over
 $[t_{j},t_{j+1}]$, matching the identity established at the start of the proof:
@@ -396,14 +643,17 @@ $[t_{j},t_{j+1}]$, matching the identity established at the start of the proof:
 
    \item[p211] In Example 5.41, the sentence should read: hence if
 $n>1/(2H)$, Theorem 5.40 applies with $p=2n$ and $r=2nH-1>0$. As printed, with
-$p=\lceil1/H\rceil$ and $r=pH-1$, one has $r=0$ whenever $1/H$ is an integer ---
-in particular $r=0$ for $H=1/2$, the case invoked in Corollary 5.42 --- whereas
+$p=\lceil1/H\rceil$ and $r=pH-1$, one has $r=0$ whenever $1/H$ is an integer (in particular, $r=0$ for $H=1/2$, the case invoked in Corollary 5.42), whereas
 (5.50) requires $r>0$. Taking $p=2n$ also matches the even moments supplied
 by (5.51).
+   \item[p211] In Example 5.41, the mixed derivative of the fBm covariance has
+the wrong sign: it should read
+$\partial^2C/\partial s\,\partial t=+H(2H-1)|t-s|^{2H-2}$.  The conclusion is
+unaffected: the derivative is unbounded at $s=t$ for $H<1$, $H\ne\frac12$; for
+$H=\frac12$, $C=\min\{s,t\}$ is not differentiable on the diagonal.
    \item[p213] In the proof of Theorem 5.40, the second branch of
 the definition of $Y$ should read $(1-t)X(0)+t\,X(1)$ and not $X(0)+t\,X(1)$.
-With the latter, $Y(1)=X(0)+X(1)\neq X(1)$ unless $X(0)=0$, contrary to the
-note that $Y(t)=X(t)$ for $t=0,1$.
+
    \item[p215] In Exercise 5.9, the process should read
 $B(t)=b\,t/T+W(t)-\frac{t}{T}W(T)$. As printed, the centred part of
 $B(t)=b\,t/T+(1-t/T)W(t)$ has covariance
@@ -427,19 +677,45 @@ $t\to\infty$ from
 \]
 has covariance $C(s,t)=\frac{1}{\lambda}\mathrm{e}^{-\lambda|s-t|}$. The stated
 covariance $C(s,t)=\mathrm{e}^{-|s-t|}$ holds only for $\lambda=1$.
+   \item[p218] In Definition 6.2, $c$ is positive definite if the inequality
+(6.1) is strict for \emph{distinct} $t_1,\dots,t_n$ and $a_1,\dots,a_n$
+\emph{not all zero}. As printed (strict for $a_1,\dots,a_n\ne0$, with
+repeated $t_i$ allowed) no function is positive definite: $t_1=t_2$,
+$a_1=-a_2=1$ gives zero.
    \item[p221] In Example 6.8, the special case $q=1/2$ of the
 Whittle--Mat\'ern covariance should read $c_{1/2}(t)=\mathrm{e}^{-|t|}$, in
 agreement with (6.5), which defines $c_q$ in terms of $|t|$.
+   \item[p221] The identity (6.7) requires $\nu\ne0$. For a stationary process
+of mean $\mu$, the constant part contributes
+$\mu^{2}\bigl|\int_0^T\mathrm{e}^{-\mathrm{i}\nu t}\,dt\bigr|^{2}/(2\pi T)$,
+which is bounded by $2\mu^{2}/(\pi T\nu^{2})$ and so vanishes as $T\to\infty$
+whenever $\nu\ne0$; at $\nu=0$ it equals $\mu^{2}T/2\pi$ and diverges.
+Estimates of the spectral density from data are correspondingly useless at
+$\nu=0$ unless the mean is subtracted first.
    \item[p221] In Example 6.9, the approximation of the spectral density should
 read
 \[
-f_T(\nu_k)\approx\frac{T}{2\pi}U_k^2,
+f_T(\nu_k)\approx\frac{T}{2\pi}|U_k|^2,
 \qquad\text{for }k=-J/2+1,\dots,J/2,
 \]
-with the factor $T$. The identity quoted immediately above is
-$f_T(\nu_k)=(T/2\pi)u_k^2$, and $U_k$ is the trapezium rule approximation to
+with the factor $T$ and the modulus. The identity quoted immediately above
+should read $f_T(\nu_k)=(T/2\pi)|u_k|^2$, and $U_k$ is the trapezium rule approximation to
 $u_k$ with the same normalisation; Algorithm 6.1
 (\texttt{spectral\_density.m}) correctly computes $T|U_k|^2/2\pi$.
+   \item[p222] In Example 6.10, taking the $y_k$ real keeps only the cosine
+terms, and the process $X(t)$ has
+covariance
+\[
+\mathrm{Cov}(X(s),X(t))\approx\tfrac12\bigl(c(s-t)+c(s+t)\bigr),
+\qquad s,t\in[0,T),
+\]
+up to a reflection at $T$. This equals $c(t)$ when $s=0$, which is the case
+shown in Figure 6.5, but it is close to $\tfrac12c(s-t)$ away from the ends
+of the interval. A stationary process with covariance close to $c(s-t)$ on
+$[0,T]$ is obtained by adding to each cosine term an independent sine term
+$\sqrt{\eta_k}\,\xi'_k\sin(\nu_kt)/\sqrt{T/2}$, that is, by taking
+$a_k=b_k(\xi_k+\mathrm{i}\xi'_k)$ with $\xi'_k$ an independent copy of
+$\xi_k$.
    \item[p233] In Example 6.30, the factor $2$ in front of the expectation
 should be deleted, so that the covariance reads
 \[
@@ -450,17 +726,13 @@ C_Z(s,t)=\mathbb{E}\bigl[Z(s)\overline{Z(t)}\bigr]
 \]
 as in Example 6.29 and as required by the definition of $C_Z$ on p232. The
 final value $2c(s-t)$ is correct.
-\item[p235] In Algorithm 6.3 (\texttt{quad\_sinc.m}), the normalisation of the
-increments $\Delta\mathcal{W}_j$ by the variance $f(\nu_j)\,\Delta\nu_j$ is
-incomplete. The nodes $\nu_j$ span $[-R,R]$ in $J-1$ steps, so
-\texttt{nustep} should be $\Delta\nu=2R/(J-1)$ (line 2), and then
-$f(\nu_j)\,\Delta\nu_j=(\ell/2\pi)\cdot 2(\pi/\ell)/(J-1)=1/(J-1)$. The final
-scaling (last line) should therefore read \texttt{Z=Z*sqrt(1/(J-1))} in place
-of \texttt{Z=Z*sqrt(ell/(2*pi))}, the factor $\ell/2\pi$ being subsumed.
-
-\item[p239] The display (6.34) is missing the term
-$\sum_{k=0}^{N-1}e^{i 2\pi N k/N}$,
-which is the FFT part.
+   \item[p239] In (6.34), the inner sum over $k$ (the part evaluated by the
+FFT) is missing; it should read
+\[
+\widetilde Z_R(t_n)=\sum_{m=0}^{M-1}\mathrm{e}^{\mathrm{i}(-R+m\Delta\nu)t_n}
+\sum_{k=0}^{N-1}\mathrm{e}^{2\pi\mathrm{i}kn/N}\sqrt{f(\nu_{kM+m})}\,\Delta W_{kM+m},
+\]
+as computed by Algorithm 6.4.
 
    \item[p240] In the proof of Corollary 6.37, the display following the
 citation of Lemma 6.36 should read
@@ -489,6 +761,11 @@ read
 \vec X=\bigl(X(t_0),X(t_1),\dots,X(t_{N-1})\bigr)^{\mathsf{T}},
 \qquad t_n=n\Delta t.
 \]
+   \item[p243] In Example 6.43, the first column of $D$ is
+$[c_0,\dots,c_4]^{\mathsf T}=[1,2,3,3,2]^{\mathsf T}$, for which $c_4=c_1$ and
+$c_3=c_2$ (not $c_5=c_1$ and $c_4=c_2$).
+   \item[p255] In Exercise 6.10, $f$ should be non-negative, and only its
+values on $[0,R]$ enter: read $f\colon[0,R]\to\mathbb{R}^+$.
    \item[p256] In Exercise 6.18, the second identity should read
 \[
 d_k=c_0+c_P(-1)^{k-1}
@@ -501,6 +778,16 @@ self-paired term of the first sum is $j=P$, with $\omega^{P(k-1)}=(-1)^{k-1}$,
 and the conjugate pairs $\pm j$ run over $j=1,\dots,P-1$; note
 $\omega^{P/2}=\mathrm{i}$, so $c_{P/2}(-1)^{k-1}$ cannot arise. The stated
 range $k=1,\dots,P$ gives only $P$ of the $2P$ eigenvalues.
+   \item[p256] Exercise 6.21(b) is ambiguous, and under its literal reading the
+answer is negative. Fixing $\Delta t=1/(N-1)$ ties the sample points to $[0,1]$,
+so increasing $N$ refines the grid rather than lengthening the interval, and
+refining never helps: for $\ell=1$, the minimal extension has
+$\rho(D_-)=3.83$, $7.70$, $15.4$, $30.9$ at $N=100$, $200$, $400$, $800$.
+Only $\ell=0.1$, for which $[0,1]$ already spans ten correlation lengths, gives
+a non-negative definite $\widetilde{C}$ at every $N$. The intended reading is to
+pad, that is, to extend the sampled interval at fixed spacing $\Delta t$; the
+minimal extension then becomes non-negative definite once the interval covers
+about five correlation lengths.
    \end{description}
  \item%C7
  \begin{description}
@@ -522,17 +809,12 @@ $f(\vec 0)=(2\pi)^{-d}\int_{\mathbb{R}^d}c(\vec x)\,d\vec x=\prod_i \ell_i/\pi$;
 the two agree only when every $\ell_i=1$.
    \item[p274] In Example 7.36, the definition of $\widetilde C_i$ should read
 $i=0,1$ and not $i=1,2$.
-   \item[p278] In Algorithm 7.3 (\texttt{gaussA\_exp.m}), the cross term should
-read \texttt{+2*x1*x2*a12}, so that the code evaluates
-$c(\vec x)=\mathrm{e}^{-\vec x^{\mathsf{T}}A\vec x}$ for the matrix $A$ of
-(7.32). As printed, the code returns
-$\mathrm{e}^{-\vec x^{\mathsf{T}}A\vec x}$ with $A$ having off-diagonal entries
-$-a_{12}$: the matrix $C_{\mathrm{red}}$ displayed in Example 7.40 is the one
-obtained for $a_{12}=-0.5$, its $(1,1)$ entry being
-$c(-1,-1)=\mathrm{e}^{-1}=0.3679$ rather than $\mathrm{e}^{-3}=0.0498$. With the
-corrected code, the first and third columns of the displayed
-$C_{\mathrm{red}}$ are interchanged.
-   \item[p279] The matrix V in the display at the top of the page has index typos. The first two entries of the second column should contain the
+   \item[p278] In Example 7.40, the displayed matrix $C_{\mathrm{red}}$ is the one
+obtained for $a_{12}=-0.5$ in (7.32), not for the stated value: its $(1,1)$ entry is
+$c(-1,-1)=\mathrm{e}^{-1}=0.3679$ rather than $\mathrm{e}^{-3}=0.0498$. For the
+stated $a_{12}$, the first and third columns of $C_{\mathrm{red}}$ are
+interchanged.
+   \item[p279] The matrix $V$ in the display at the top of the page has index typos. The first two entries of the second column should contain the
 indices $2n_1+1$ and $2n_1 + 2$ instead of $n_2$.
    \item[p285, p286, p289] In Example 7.45, the turning bands operator applied to
 the Bessel covariance should read
@@ -540,10 +822,7 @@ the Bessel covariance should read
 T_d\!\left(\Gamma(d/2)\,J_p(t)/(t/2)^p\right)=\cos(t),\qquad p=(d-2)/2,
 \]
 so that $c_X(t)=\cos(t)$ and the factors $1/\sqrt2$ should be deleted from (7.34)
-and (7.35), giving $X(t)=\cos(t)\xi_1+\sin(t)\xi_2$; correspondingly
-\texttt{sqrt(1/2)} should be deleted from Algorithm 7.7
-(\texttt{turn\_band\_simple.m}) and Algorithm 7.9
-(\texttt{turn\_band\_simple2.m}). By Definition 7.43 with $F^0(s)=\delta(s-1)$,
+and (7.35), giving $X(t)=\cos(t)\xi_1+\sin(t)\xi_2$. By Definition 7.43 with $F^0(s)=\delta(s-1)$,
 $T_dc^0(t)=\int_0^\infty\cos(st)\,dF^0(s)=\cos(t)$. With $c_X=\tfrac12\cos$,
 Lemma 7.46 gives the turning bands field the covariance
 $\frac{1}{2\pi}\int_0^{2\pi}\tfrac12\cos(r\cos\phi)\,d\phi=\tfrac12 J_0(r)$ when
@@ -559,32 +838,20 @@ identity should read
 that is, a factor $r^{(d-2)/2}$ is missing from the printed coefficient
 $2^{2-d/2}/(\pi^{1/2}\Gamma((d-1)/2))$ (it is printed correctly in Appendix A.3).
 
-   \item[p291] In Algorithm 7.10 (\texttt{turn\_band\_wm.m}), \texttt{f} should be an even function of \texttt{s} (missing modulus).
    \item[p291] In the proof of Corollary 7.50,
 $|c^{0}-\tilde c_M|=|c^{0}-c_M|+|c_M-\tilde c_M|$ should read
 $|c^{0}-\tilde c_M|\le|c^{0}-c_M|+|c_M-\tilde c_M|$.
  \item[p305] In  Lemma 7.67, the quantity $M_0(u)$ is infinite as stated and cannot be used for proving Theorem~7.68. We show here how to prove Theorem 7.68 using  the Garsia--Rodemich--Rumsey (GRR) inequality. We state GRR on a bounded domain $D\subset\mathbb{R}^d$, rather than only on $D=(0,1)$, so that the argument covers Theorem 7.68 as stated.  For an alternative approach to Theorem~7.68, see M.~Talagrand,  \enquote{Upper and Lower Bounds
 for Stochastic Processes}, Springer, 2021 (Section~2.5).% Theorem 2.15.3
 
-Let $\Psi(t)=\exp(t^2)$ and $p(t)=t^{q}$.  Throughout, $D\subset\mathbb{R}^d$
-is a bounded domain whose boundary is piecewise smooth, as is assumed
-throughout the book. All that is used of this is the resulting
-\emph{measure-density} property: writing $B(\vec x,r)$ for the ball of radius
-$r$ centred at $\vec x$, there is a $c_D>0$ with
-\[
-\leb\pp{D\cap B(\vec x,r)}\ge c_D\, r^d,\qquad
-\vec x\in \Dbar,\quad 0<r\le \mathrm{diam}\,D,
-\]
-which prevents $D$ from pinching. After rescaling we may, and do, assume
-$\mathrm{diam}\,D\le 1$.
-
-(Note: GRR applies to a wider class of $\Psi$ and $p$, which we do not describe here --- see  Garsia, Rodemich, and Rumsey (1971) for details.  The multidimensional form stated here is due to Garsia, \enquote{Continuity properties of Gaussian processes with multidimensional time parameter}, Berkeley Symp. on Math. Statist. and Prob., 1972; for $d=1$ and $D=(0,1)$ one may take $C_d=8$ and $c_d=4$.)
+Let $\Psi(t)=\exp(t^2)$ and $p(t)=t^{q}$. 
+(Note: GRR applies to a wider class of $\Psi$ and $p$, which we do not describe here; see  Garsia, Rodemich, and Rumsey (1971) for details.  The multidimensional form stated here is due to Garsia, \enquote{Continuity properties of Gaussian processes with multidimensional time parameter}, Berkeley Symp. on Math. Statist. and Prob., 1972; for $d=1$ and $D=(0,1)$ one may take $C_d=8$ and $c_d=4$.)
 \begin{lemma*}[Garsia--Rodemich--Rumsey]
 Let $f$ be a continuous function on $\Dbar$ and suppose that
 \[M_0(f)=\int_D \int_D \Psi\left(\frac{ |f(\vec x)-f(\vec y)|}{p(\enorm{
   \vec x-
   \vec y})}\right)\,d\vec x\,d\vec y<\infty. \]
-Then, for constants $C_d,c_d>0$ depending only on $d$ and $c_D$, we have, for all $\vec x,\vec y\in\Dbar$,
+Then, for constants $C_d,c_d>0$ depending only on $d$ and $D$, we have, for all $\vec x,\vec y\in\Dbar$,
 \[
 |f(\vec x)-f(\vec y)|\le C_d\int_0^{\enorm{\vec x-\vec y}} \Psi^{-1}\left(\frac{c_dM_0(f)}{r^{2d}}\right)\,dp(r).
  \]
@@ -689,8 +956,8 @@ This version of Lemma 7.67 can be used in the proof of Theorem 7.68.
   {\tsqrt{8 \,L \enorm{\vec x-\vec y}^s}},\qquad
   \vec x,\vec y\in {\Dbar}.
   \]
-  The random variables in the \KL expansion are \iid with mean zero
-  and hence $\mean{\Delta_{J+1}\,\big|\, \Delta_J}=\Delta_J$. Further,
+  The random variables in the \KL expansion are \iid with mean
+  zero. Hence $\mean{\Delta_{J+1}\,\big|\, \Delta_J}=\Delta_J$. Further,
   the function $t\mapsto\exp( t^2)$ is convex and Jensen's inequality
   implies that $\mean{ \erm^{\Delta_{J+1}^2}\,\big|\, \Delta_J} \ge
   \erm^{\Delta_J^2}$. That is, $\erm^{\Delta_J^2}$ is a submartingale and
@@ -744,7 +1011,7 @@ This version of Lemma 7.67 can be used in the proof of Theorem 7.68.
 
   It remains to show $\erm^K\in L^p(\Omega)$.  Put $a\coloneq2\tsqrt
   L\,C_\epsilon$.  For $x\ge0$ and $\delta>0$ we have $\sqrt x\le \delta x
-  +1/4\delta$, since $\pp{\sqrt{\delta x}-1/2\sqrt\delta}^2\ge0$; taking
+  +1/4\delta$, since $(\sqrt{\delta x}-1/2\sqrt\delta)^2\ge0$; taking
   $\delta=1/pa$ and $x=\log\pp{\erm+M_1(u)}$ gives
   \[
   p\,K = pa\sqrt{\log\pp{\erm+M_1(u)}}%
@@ -757,6 +1024,11 @@ This version of Lemma 7.67 can be used in the proof of Theorem 7.68.
   this gives~\eqref{eq:hi}.
 \end{proof}
 
+   \item[p293] Theorem 7.52 needs the same corrections as Theorem 5.28 (see
+the entry for p202, p203): terms with $\nu_j=0$, for which
+$\xi_j=\langle u-\mu,\phi_j\rangle/\sqrt{\nu_j}$ is undefined, are omitted
+from the sum (they vanish almost surely), and in the Gaussian case the $\xi_j$
+are independent, not only pairwise independent.
    \item[p297] In Theorem 7.57, $V_d$ should be the volume of the unit ball in
 $\mathbb{R}^d$, namely $V_d=\pi^{d/2}/\Gamma(d/2+1)$, and not the volume of the
 unit sphere. The derivation of the theorem given in the Notes uses $V_d$ in
@@ -770,6 +1042,15 @@ with correlation lengths $\ell_1,\ell_2$ on $D=[-a_1,a_1]\times[-a_2,a_2]$.
 asserts $E_1\le0$, since $\log^2 J/J$ vanishes at $J=1$, whereas $E_1>0$ for a
 non-degenerate field. The proof requires $J\ge\mathrm{e}^{2}$ in any case, that
 being the range in which Exercise 7.17 is valid.
+   \item[p300] Theorem 4.63 does not apply to (7.55), as $C_J$ has rank at most
+$J<N$ and is singular (see p201). Since $C-C_J=\sum_{j>J}\nu_j\vec\phi_j\vec\phi_j^{\mathsf T}$
+is non-negative definite, $\vec u=\vec u_J+\vec Z$ with $\vec Z$ independent of
+$\vec u_J$, and for $\phi$ with bounded second derivatives
+$|\mathbb{E}[\phi(\vec u)]-\mathbb{E}[\phi(\vec u_J)]|
+\le\tfrac12\sup\|D^2\phi\|_2\sum_{j>J}\nu_j\|\vec\phi_j\|_2^2$. Following (7.57),
+the closeness of averages for bounded continuous $\phi$ when $C$ and $\widehat
+C_J$ are close holds because a Gaussian distribution depends continuously on its
+covariance matrix, not by Theorem 4.63.
    \item[p300] Following (7.57), the vector $\widehat{\vec u}_J$ has distribution
 $\mathrm{N}(\vec\mu,\widehat C_J)$ and not $\mathrm{N}(\vec 0,\widehat C_J)$.
    \item[p303] In the display following (7.63), both occurrences of $\varphi_j$
@@ -788,27 +1069,62 @@ $q=2\lambda p\,|R|^{(s-\epsilon)/2}\ge 1$, and
 \le \mathrm{e}^{\lambda p K(\omega)|R|^{(s-\epsilon)/2}}
 = \mathrm{e}^{qK(\omega)/2}.
 \]
-   \item[p310] In Exercise 7.1(1), the covariance should read
+As written, this needs $\lambda>0$ and $\vec 0\in\overline{D}$, whereas the
+corollary is stated for all $\lambda\in\mathbb{R}$. Replace $\vec 0$ by a fixed
+$\vec x_0\in\overline D$ with $D\subset B(\vec x_0,R)$, $\lambda$ by
+$|\lambda|$ in the exponents, and take
+$q=\max\{1,2|\lambda|pR^{(s-\epsilon)/2}\}$; the final equality becomes
+$\le$.
+   \item[p310] In Exercise 7.1(a), the covariance should read
 $\mathbb{E}[W_N(\vec x)W_N(\vec y)]=\min\{x_1,y_1\}\min\{x_2,y_2\}$, and in
 Exercise 7.2(b) the distribution should read
 $\mathrm{N}\!\left(0,\,x_1x_2+y_1y_2-2(x_1\wedge y_1)(x_2\wedge y_2)\right)$. In
 both, the minimum is taken across the two points, as in the Brownian sheet
 covariance of Example 7.7.
+   \item[p310] Exercise 7.2(c) is false: two-point differences
+$\beta(\vec y)-\beta(\vec x)$ over opposite corners of disjoint rectangles need
+not be independent (for $[0,1]^2$ and $[2,3]\times[0,1]$,
+$\mathrm{Cov}(\beta(1,1),\beta(3,1)-\beta(2,0))=1$). It should concern the
+rectangular increments
+$\Delta_R\beta=\beta(b_1,b_2)-\beta(a_1,b_2)-\beta(b_1,a_2)+\beta(a_1,a_2)$,
+$R=[a_1,b_1]\times[a_2,b_2]$, which satisfy
+$\Delta_R\beta\sim\mathrm{N}(0,\mathrm{Leb}(R))$ and are independent for
+rectangles with disjoint interiors.
    \end{description}
  \item%C8
    \begin{description}
-   \item[p315, p316] In the captions of Figures 8.1(a) and 8.2(b), the horizontal
+   \item[p316] In the caption of Figure 8.1, the parameter is $\sigma=1/10$, not
+$\sigma=1/2$: the horizontal lines are at
+$\pm0.14=\pm2\sqrt{\sigma^2/(2\lambda)}$ for $\sigma=1/10$, $\lambda=1$. The
+histogram in (b) is of $P(t_n)$ for $t_n\in[500,1000]$ (every time step, three
+paths), not $t_n\in[10,1000]$.
+   \item[p316] In Example 8.1, the limiting distribution
+$\mathrm{N}(0,k_{\mathrm B}T)$ of the momentum has pdf
+$p(P)=\mathrm{e}^{-\beta H(P)}/Z$ with $H(P)=P^2/2$. As a function of $(Q,P)$,
+$\mathrm{e}^{-\beta P^2/2}$ cannot be normalised.
+   \item[p316, p317] In the captions of Figures 8.1(a) and 8.2(b), the horizontal
 lines mark the 95\% confidence interval and not the 90\% interval. The interval
 $\bigl[-2\sqrt{\sigma^2/2\lambda},\,+2\sqrt{\sigma^2/2\lambda}\bigr]$ is
 $\pm 2$ standard deviations of $\mathrm{N}(0,\sigma^2/2\lambda)$ and carries
 probability $0.954$; the 90\% interval is
 $\pm 1.645\sqrt{\sigma^2/2\lambda}$.
-   \item[p317] In \S8.2, the $\sigma$-algebra should be the natural
+ 
+   \item[p318] In the caption of Figure 8.3, the volatility is $\sigma=1$, not
+$\sigma=5$.
+   \item[p319] In \S8.2, the $\sigma$-algebra should be the natural
 filtration $\mathcal{F}_s=\sigma(W(u)\colon u\le s)$ and not $\sigma(W(s))$.
 With $\mathcal{F}_s=\sigma(W(s))$, the identity
 $\mathbb{E}[W(t)\mid\mathcal{F}_s]=W(s\wedge t)$ fails for $t<s$: it gives
 $\mathbb{E}[W(t)\mid\sigma(W(s))]=(t/s)W(s)$, not $W(t)$ (the Brownian bridge).
-   \item[p322] In Definition 8.12, the left-hand side of (8.18) should be
+   \item[p322] The identity (8.16) does not cover the case used in the proof
+of Lemma 8.9(iii), where $[r_k,r_{k+1})\subset[s_j,s_{j+1})$. For
+$p\le s\le t$ and $p\le r$, it should read
+\[
+\mathbb{E}\bigl[(W(r)-W(p))(W(t)-W(s))\bigm|\mathcal{F}_s\bigr]
+=\max\{r\wedge t-s,\,0\},
+\]
+which includes both printed cases. The conclusion of the proof is unaffected.
+   \item[p323] In Definition 8.12, the left-hand side of (8.18) should be
 squared,
 \[
 \|I_n(t)-I_m(t)\|_{L^2(\Omega)}^2
@@ -816,12 +1132,16 @@ squared,
 =\int_0^t \mathbb{E}\bigl[\lvert X_n(s)-X_m(s)\rvert^2\bigr]\,ds,
 \]
 as in the It\^o isometry (8.17).
-   \item[p325] In (8.29), in the proof of Theorem 8.18, the constant should be
+   \item[p325] In the proof of Theorem 8.18, the random variable $\vec X$ should
+be $\mathcal{F}_0$-measurable, and hence independent of $\vec W(t)$, not
+``independent of $\mathcal{F}_0$''. Independence of $\mathcal{F}_0$ does not
+give independence of $\vec W(t)$, and $\mathcal{J}(\vec u)$ must be adapted.
+   \item[p326] In (8.29), in the proof of Theorem 8.18, the constant should be
 $L$ and not $L^2$: the linear growth bounds (8.24) of Assumption 8.17 carry the
 constant $L$. The same replacement is needed in the display from which (8.29)
 follows. The constant $L^2$ in the contraction estimate later in the proof is
 correct, as it comes from squaring the Lipschitz bound (8.25).
-   \item[p326] In the proof of Lemma 8.19, the limit of
+   \item[p328] In the proof of Lemma 8.19, the limit of
 $\mathbb{E}[B_N]$ should read
 \[
 \to \frac12\int_0^t \phi''(u(s))\,g(u(s))^2\,ds,\qquad\text{as }N\to\infty,
@@ -829,11 +1149,24 @@ $\mathbb{E}[B_N]$ should read
 with $g^2$ in place of $g$, in agreement with
 $\mathbb{E}[C_j]=f^2\,\Delta t+g^2$ on the preceding line and with the $g^2$ in
 the statement (8.31).
-   \item[p333] In \S8.4, ``A simple method for sampling the L\'evy areas
+   \item[p328] In Example 8.21, the parameters should be $\lambda>0$ and
+$\mu,\sigma\in\mathbb{R}$. Mean reversion, the covariance and the limit
+$\mathrm{N}(\mu,\sigma^2/(2\lambda))$ all need $\lambda>0$.
+   \item[p332] In the expansion of $G(\vec u(r))$ in the derivation of the Milstein
+method, the remainder should be $\vec R_1(r;s,\vec u(s))$, not
+$\vec R_1(t,s;\vec u(s))$, as in the definition of $\vec R_M$ that follows.
+   \item[p334] When the noise is diagonal, the reduction of Milstein's method
+to the componentwise form also needs $g_{kk}$ to depend only on $u_k$. Otherwise
+the terms $\frac{\partial g_{kk}}{\partial u_i}g_{ii}$, $i\ne k$, remain, with
+products $\Delta W_{in}\Delta W_{kn}$ and L\'evy areas $A_{ik,n}$. The commutativity
+condition should also carry the sum over $\ell$:
+$\sum_{\ell}\frac{\partial g_{kj}}{\partial u_\ell}g_{\ell i}
+=\sum_{\ell}\frac{\partial g_{ki}}{\partial u_\ell}g_{\ell j}$.
+   \item[p334] In \S8.4, ``A simple method for sampling the L\'evy areas
 $A_{ij}$ is considered in Exercise 5.3'' should refer to Exercise 8.12, which
 identifies and approximates the L\'evy area $A_{12}$. Exercise 5.3 concerns the
 L\'evy--Ciesielski construction of Brownian motion.
-   \item[p335] In Example 8.26, the exponent in the first line of the display
+   \item[p336] In Example 8.26, the exponent in the first line of the display
 for the second moment should be inside the expectation,
 \[
 \mathbb{E}\bigl[u_n^2\bigr]
@@ -845,18 +1178,41 @@ As printed, the left-hand side equals
 $\bigl(\mathbb{E}\bigl[\prod_j(1+r\,\Delta t+\sigma\,\Delta W_j)\bigr]\bigr)^2u_0^2
 =(1+r\,\Delta t)^{2n}u_0^2$, which is not $\mathbb{E}[u_n^2]$. The conclusion
 (8.52) is unaffected.
-   \item[p340] In the proof of Proposition 8.31(ii), the integrand
-$\mathbb{E}\bigl[\|R_{G}(r;s,\vec{u}(r))\|_{F}^{2}\bigr]$ should read
-$\mathbb{E}\bigl[\|R_{G}(r;s,\vec{u}(s))\|_{F}^{2}\bigr]$. The It\^o isometry
-does not change the base point of the integrand.
+   \item[p339] In the proof of Lemma 8.30, the constant should be $2L$ and not
+$2L^2$, for the reason given for (8.29) on p326. Lemma 8.30 should also state the
+fourth-moment bound
+$\mathbb{E}\bigl[\|\vec u(t)-\vec u(s)\|_2^4\bigr]\le K|t-s|^2$, which the proof
+of Proposition 8.31(i) and (iii) needs for the second-order remainders: for
+example, $\|R_G\|_F\le\frac12\sup\|D^2G\|\,\|\vec u(r)-\vec u(s)\|_2^2$. It
+follows as for the second moment, with the Burkholder--Davis--Gundy inequality
+(p366) in place of the It\^o isometry.
+   \item[p340] In the proof of Proposition 8.31(ii), the integrand should read
+\[
+\mathbb{E}\bigl[\|R_{G}(r;s,\vec{u}(s))\|_{F}^{2}\bigr]
+\quad\text{not}\quad
+\mathbb{E}\bigl[\|R_{G}(r;s,\vec{u}(r))\|_{F}^{2}\bigr].
+\]
+The It\^o isometry does not change the base point of the integrand.
    \item[p340] In the proof of Proposition 8.31(iii),
-$\mathbb{E}\bigl[\|DG(\vec{u}(s))\vec{R}_{1}(s,\vec{u}(s))\|_{F}^{2}\bigr]$
-should read
-$\mathbb{E}\bigl[\|DG(\vec{u}(t_{j}))\vec{R}_{1}(t_{j},\vec{u}(t_{j}))\|_{F}^{2}\bigr]$,
-matching the $t_{j}$-indexed sum and the $R_{G}$ term alongside it.
-   \item[p341] In the proof of Proposition 8.31(iii), the sentence ``using
+\[
+\mathbb{E}\bigl[\|DG(\vec{u}(s))\vec{R}_{1}(s,\vec{u}(s))\|_{F}^{2}\bigr]
+\quad\text{should read}\quad
+\mathbb{E}\bigl[\|DG(\vec{u}(t_{j}))\vec{R}_{1}(r;t_{j},\vec{u}(t_{j}))\|_{F}^{2}\bigr],
+\]
+matching the $t_{j}$-indexed sum and the $R_{G}$ term alongside it. Likewise,
+$\vec R_1(s,\vec u(s))$ and $\vec R_1(t_j,\vec u(t_j))$ in the expansion of
+$\vec R_f$ that follows should read $\vec R_1(r;s,\vec u(s))$ and
+$\vec R_1(r;t_j,\vec u(t_j))$.
+   \item[p340] In the proof of Proposition 8.31(iii), the sentence ``using
 (8.43) gives for $r>s$.'' is incomplete. It should read ``where the second
 equality uses (8.43) with $r>s$ to replace $\vec{u}(r)-\vec{u}(s)$.''
+   \item[p342] In the proof of Theorem 8.32, (8.61) should read
+$\vec u_{\Delta t}(t)-\vec u(t)=\int_0^t\vec D(s)\,ds+\int_0^tM(s)\,d\vec W(s)
+-\sum_{t_j<t}\vec R_M(t_{j+1}\wedge t;t_j,\vec u(t_j))$. The sum already
+contains the last partial interval, so the final term
+$\vec R_M(t;t_n,\vec u(t_n))$ should be deleted, and the sign of the sum is
+negative. The proof uses (8.61) only at grid times, where the deleted term
+vanishes, so the conclusion is unaffected.
    \item[p342] In the proof of Theorem 8.32, $\vec{e}$ is defined only at the
 grid times, by $\vec{e}(\hat{t})=\vec{u}_{\Delta t}(\hat{t})-\vec{u}(\hat{t})$,
 yet the bounds that follow are written $\mathbb{E}[\|\vec{e}(s)\|_{2}^{2}]$ for
@@ -886,7 +1242,13 @@ $\mathbb{E}\bigl[\|\int_{\hat{s}}^{s} d\vec{W}(r)\|_{2}^{2}\bigr]
 $\mathcal{F}_{\hat{s}}$ while $\vec{e}(s)$ is
 $\mathcal{F}_{\hat{s}}$-measurable. The existence of $K_{3}$, and hence the
 conclusion, is unaffected.
-   \item[p351] In the proof of Theorem 8.45, the coefficients of the frozen
+   \item[p345] In the caption of Figure 8.9, the coarse time step is
+$\Delta t=0.02$ ($\kappa=100$, as in Example 8.33), not $\Delta t=0.04$.
+   \item[p349] In Lemma 8.39, the bound should read
+$\mathbb{E}\bigl[\|D^n\vec u(t)(\vec\xi_1,\dots,\vec\xi_n)\|_2^2\bigr]\le
+K\|\vec\xi_1\|_2^2\cdots\|\vec\xi_n\|_2^2$, with squared norms on the right, as
+the proof (for $n=1$) gives and Corollary 8.41 uses.
+   \item[p352] In the proof of Theorem 8.45, the coefficients of the frozen
 generator defined after (8.78) should be evaluated at the numerical solution
 $\vec u_{\Delta t}$ and not at $\vec u$:
 \[
@@ -900,7 +1262,9 @@ and $\widehat{\mathcal{L}}^k(t)\Phi(t,\vec x)
 These are the coefficients of (8.77), to which the It\^o formula is applied to
 give (8.78); compare $\Theta_1$ in (8.81), which is evaluated at
 $\vec u_{\Delta t}(\hat s)$.
-   \item[p351] In the proof of Theorem 8.45, (8.79) should carry an overall
+   \item[p352] In the proof of Theorem 8.45, $e=\Phi(T,\vec u_0)
+-\Phi(0,\vec u_{\Delta t}(T))$ and the first line of (8.79) need an expectation
+on $\Phi(0,\vec u_{\Delta t}(T))$, and (8.79) should carry an overall
 minus sign,
 \[
 e=-\mathbb{E}\Bigl[\int_0^T \frac{\partial}{\partial t}
@@ -917,7 +1281,12 @@ $\Phi(t,x)=x^2\mathrm{e}^{t}$ and
 $e=u_0^2\bigl(\mathrm{e}^{T}-(1+\Delta t)^N\bigr)>0$, whereas the display as
 printed is negative. The theorem is unaffected, since (8.76) bounds
 $\lvert e\rvert$.
-   \item[p353] Below (8.88), ``where $\vec U_{\ell}^{j,\mathrm{fine}}$ and
+   \item[p353] In the proof of Theorem 8.45, $\widehat{\mathcal L}$ carries the
+factor $\frac12$ but $\Theta_1$, $\Theta_2$ in (8.81)--(8.82) do not, so the
+decomposition of $\widehat{\mathcal L}\Phi-\mathcal L\Phi$ before them is out by
+a factor $2$; define $\Theta_i$ with $\frac12$. With the sign above, (8.84) then
+reads $e=-\int_0^T\int_{\hat s}^s\bigl(\mathbb{E}[Q_1]-\mathbb{E}[Q_2]\bigr)\,dr\,ds$.
+   \item[p354] Below (8.88), ``where $\vec U_{\ell}^{j,\mathrm{fine}}$ and
 $\vec U_{\ell}^{j,\mathrm{coarse}}$ are iid samples of $\vec U_{\ell}$'' should
 read: for each $j$, $\vec U_{\ell}^{j,\mathrm{fine}}$ is a sample of
 $\vec U_{\ell}$ and $\vec U_{\ell-1}^{j,\mathrm{coarse}}$ is a sample of
@@ -939,7 +1308,22 @@ with $g_1$ in place of $g_0$. As printed, the hypothesis $g(u)\ge g_0$ gives
 $1/g\le 1/g_0$ and hence the reverse inequality
 $\lvert\phi(x)-\phi(y)\rvert\le\lvert x-y\rvert/g_0$; a lower bound on $g$ alone
 does not make $\phi^{-1}$ Lipschitz.
-   \item[p368] In Exercise 8.8(a), the limit should read
+   \item[p362] At the end of the proof of Theorem 8.51, the bound
+$\sup_t\bigl\lvert\sum_{j>J}a_j\xi_j\sin((j+\frac12)\pi t)\bigr\rvert\le
+\bigl\lvert\sum_{j>J}a_j\xi_j\bigr\rvert$ is false (bounding $\lvert\sin\rvert\le1$
+termwise gives $\sum_{j>J}a_j\lvert\xi_j\rvert$, which diverges). The uniform
+convergence of $W_J$ to $W$ almost surely is true, by the It\^o--Nisio theorem
+(K.~It\^o and M.~Nisio, Osaka J. Math.\ 5 (1968) 35--48). Alternatively, the
+proof applies unchanged to any piecewise continuously differentiable $W_J$ with
+$W_J(0)=0$ and $\sup_t\lvert W(t)-W_J(t)\rvert\to0$ a.s.; the piecewise-linear
+interpolant of $W$ at $t_j=j/J$ has this property because each path of $W$ is
+uniformly continuous on $[0,1]$.
+   \item[p364] In the derivation of Heun's method, the Taylor remainder is
+$R=\frac12 g''(\zeta)g(v)^2\delta^2$ for some $\zeta$ between $v$ and
+$v+g(v)\delta$ (not $\frac12g''(v)\xi^2g(v)^2\delta^2$), and with
+$\delta=\Delta W_n$ the remainder term in the following display is
+$-\frac12R\,\Delta W_n$, not $+R$. Heun's method itself is unaffected.
+   \item[p369] In Exercise 8.8(a), the limit should read
 \[
 \mathbb{E}[u_n^2]\to\frac{\sigma^2}{2\lambda-\lambda^2\,\Delta t},
 \qquad\text{as }n\to\infty,
@@ -951,9 +1335,25 @@ $v_n=\mathbb{E}[u_n^2]$ obeys
 $v_{n+1}=(1-\lambda\,\Delta t)^2v_n+\sigma^2\,\Delta t$, with fixed point
 $\sigma^2\,\Delta t/\bigl(1-(1-\lambda\,\Delta t)^2\bigr)$. The limit exists for
 $\lambda\,\Delta t<2$ and exceeds the exact value $\sigma^2/2\lambda$.
-   \item[p370] In Exercise 8.16(a), ``$M=-1$'' should read ``$A=-1$''. No $M$
-appears in the semilinear SODE (8.120) or in the exact solution (8.122); the
-linear coefficient is $A$.
+   \item[p369] In Exercise 8.10(a), $g(u_u)$ should read $g(u_n)$.
+   \item[p369] In Exercise 8.10(b), the part is stated for $m=1$, so there is a
+single Brownian motion and the increment driving component $k$ should be
+$\Delta W_n$, not $\Delta W_{k,n}$. The final term of the same display already
+carries $\Delta W_n^2$.
+   \item[p370] In Exercise 8.16(a), ``$M=-1$'' should read ``$A=1$''. No $M$
+appears in the semilinear SODE (8.120), in the semi-implicit method (8.121) or
+in the exact solution (8.122); the linear coefficient is $A$, and $M$ denotes
+the number of samples elsewhere in the chapter. The sign is fixed by (8.120),
+where the drift is written $-A\vec u+\vec f(\vec u)$: taking $A=1$ gives the
+decaying linear part that (8.122) describes, whereas $A=-1$ would give drift
+$+\vec u+\vec f(\vec u)$.
+   \item[p370] In (8.121), the trailing $dt$ should be deleted. The step
+$\Delta t$ already multiplies the drift, and the noise term carries the
+increment $\Delta\vec W_n$, so the equation reads
+\[
+\vec u_{n+1}=\vec u_n+\Delta t\bigl(-A\vec u_{n+1}+\vec f(\vec u_n)\bigr)
++G(\vec u_n)\,\Delta\vec W_n.
+\]
    \end{description}
  \item %C9
    \begin{description}
@@ -978,6 +1378,14 @@ the printed $KQ^{-1}$.
    \item[p392] In the remark following Corollary 9.35, ``If $d=2$, we
 require $q>4$'' should read $q \ge 4$, consistent with the hypothesis $q \ge 2d$
 of the corollary.
+   \item[p393] In Example 9.36, the covariance of $a$ is not close to $c$. It is
+$\frac12\bigl(c_1(x-y)+c_1(x+y)\bigr)$, where
+$c_1(t)=\frac12+\sum_{k\ge1}\mathrm{e}^{-\pi k^2\ell^2}\cos(k\pi t)$ is the
+covariance of the stationary process of Example 6.10 (see the entry for p222)
+with $T=1$. For small $\ell$, it is close to $\frac12c(x-y)$ away from the ends
+of $D$. Likewise, in Example 9.37 the covariance is close to $\frac14c^0$ away
+from the boundary of $D$. The eigenpairs, and the computations that use them,
+are unaffected.
    \item[p394] In the caption of Figure 9.9, the variance should read
 $\mathrm{Var}(a(\vec{x})) \approx 4.6708$ and not $8.0257$. For the parameters
 stated in the caption ($\mu_{k}=0$, $\sigma_{k}=1$), the formula given in
@@ -985,18 +1393,53 @@ Example 9.39 yields
 $(\mathrm{e}^{\sigma_{k}^{2}}-1)\,\mathrm{e}^{2\mu_{k}+\sigma_{k}^{2}}
 = \mathrm{e}^{2}-\mathrm{e} \approx 4.6708$. The mean
 $\approx 1.7487 = 0.1 + \mathrm{e}^{1/2}$ in the same caption is correct.
-   \item[p398] In the proof of Theorem 9.48, the three occurrences of $u$ ---
-twice in $|u(\cdot,\vec{y})|_{H^{2}(D)}$ and once in
-$|u|_{L_{p}^{2}(\Gamma,H^{2}(D))}$ --- should read $\tilde{u}$. Assumption 9.47
+   \item[p397] In the proof of Theorem 9.48, the three occurrences of $u$ (twice in $|u(\cdot,\vec{y})|_{H^{2}(D)}$ and once in
+$|u|_{L_{p}^{2}(\Gamma,H^{2}(D))}$) should read $\tilde{u}$. Assumption 9.47
 bounds $|\tilde{u}|_{L_{p}^{2}(\Gamma,H^{2}(D))}$, so the final step of the
 proof requires the tilde.
+   \item[p397] Assumption 9.47 and Theorem 9.48 omit the boundary data.
+Theorem 9.48 is stated with $W^{h} \subset H_{g}^{1}(D)$, that is for
+non-homogeneous Dirichlet data, but Assumption 9.47 bounds
+$|\tilde{u}|_{L_{p}^{2}(\Gamma,H^{2}(D))}$ by a multiple of
+$\|\tilde{f}\|_{L_{p}^{2}(\Gamma,L^{2}(D))}$ alone, and so does (9.63). This is
+the point made for Assumption 2.64 in the p79 entry above: as printed, the
+assumption can be verified only for constant $g$. Both should carry a boundary
+term,
+\[
+|\tilde{u}|_{L_{p}^{2}(\Gamma,H^{2}(D))} \le K_{2}
+\Bigl(\|\tilde{f}\|_{L_{p}^{2}(\Gamma,L^{2}(D))}
++\|g\|_{H^{3/2}(\partial D)}\Bigr),
+\]
+and correspondingly, in (9.63),
+\[
+|\tilde{u}-\tilde{u}_{h}|_{W} \le
+K \sqrt{\tilde{a}_{\max}/\tilde{a}_{\min}}\; h
+\Bigl(\|\tilde{f}\|_{L_{p}^{2}(\Gamma,L^{2}(D))}
++\|g\|_{H^{3/2}(\partial D)}\Bigr).
+\]
+The intermediate step of the proof holds for any $g$, since
+$|\tilde{u}|_{H^{2}(D)}$ absorbs the boundary data; the term is lost only where
+Assumption 9.47 replaces $|\tilde{u}|_{H^{2}(D)}$ by $\|\tilde{f}\|$. For $g=0$
+the second term drops and the printed bounds are recovered.
    \item[p407] In Example 9.57, the MATLAB command should call
 \texttt{fem\_blocks} and not \texttt{fem\_components}. Algorithm 9.3 defines
 \texttt{[K\_mats,KB\_mats,f\_vecs,wB]=fem\_blocks(...)}, and the fifteen
 arguments supplied in the example match that signature.
-   \item[p420] In (9.120), $\dfrac{dv^{k_{i}+1}}{dy^{k_{i}+1}}$ should read
+   \item[p410] In Theorem 9.62, the conclusion that the eigenvalues of
+$G_{\ell}$ are the roots of $P_{1},\ldots,P_{k+1}$ is correct, but the stated
+multiplicities are not: the count (9.106) is wrong except when $k+1-s\le 2$,
+and in any case a multiplicity cannot be attached to the roots of each $P_{s}$
+separately, because different $P_{s}$ share roots. For a symmetric weight, such
+as the Legendre or Hermite families, $0$ is a root of every odd-degree $P_{s}$;
+already in Example 9.60 it is an eigenvalue of multiplicity $2$. Nothing else in
+the chapter uses the multiplicities, and the two corollaries that follow need
+only the set of eigenvalues. For the multiplicities, see C.~E. Powell and
+H.~C. Elman, \enquote{Block-diagonal preconditioning for spectral stochastic
+finite-element systems}, IMA J. Numer. Anal. 29 (2009), 350--375. The proof also
+describes the permuted matrix as block tridiagonal; it is block diagonal.
+   \item[p419] In (9.120), $\dfrac{dv^{k_{i}+1}}{dy^{k_{i}+1}}$ should read
 $\dfrac{d^{k_{i}+1}v}{dy_{i}^{k_{i}+1}}$.
-   \item[p421] The order of differentiation is likewise misplaced in (9.121), in
+   \item[p419] The order of differentiation is likewise misplaced in (9.121), in
 the statement of Lemma 9.75 and in (9.122), which should read
 $\dfrac{\partial^{k_{i}+1}v}{\partial y_{i}^{k_{i}+1}}$,
 $\dfrac{\partial^{k_{i}+1}\tilde{u}}{\partial y_{i}^{k_{i}+1}}$ and
@@ -1012,6 +1455,26 @@ indexed by $i,r=1,\ldots,J$ in (9.93)--(9.94); the interior--boundary coupling i
 carried by the separate matrices
 $K_{\ell,\mathrm{B}} \in \mathbb{R}^{J_{b} \times J}$, which do not appear in
 this expression for $A$.
+   \item[p424] In the Notes, ``we introduced Assumption 9.47 as a generalisation
+of Assumption 2.13'' should read ``we introduced Assumptions 9.14 and 9.47 as
+generalisations of Assumption 2.64''. Assumption 2.13 is the one-dimensional
+$H^{2}$ assumption; Assumption 2.64 is the two-dimensional one, to which the
+preceding remark on $\mathrm{C}^{0,1}$ coefficients refers. The next sentence
+should read ``If Assumption 2.64 holds for almost every realisation, with a
+constant $K_{2}(\omega)$ that belongs to $L^{4}(\Omega)$, then Assumption 9.14
+holds''. As printed, it names the wrong assumption (the $L^{4}(\Omega)$
+condition is that of Assumption 9.14), and a pointwise $H^{2}$ condition with
+$|u|_{H^{2}(D)} \in L^{4}(\Omega)$ is not enough, since the assumptions bound
+$|u|_{H^{2}(D)}$ by a multiple of $\|f\|_{L^{2}(D)}$. In the same paragraph,
+``Theorem 9.17'' should read ``Lemma 9.17''.
+   \item[p425] In the Notes, the homogenised coefficient $a_*=1/\mathbb{E}[a^{-1}]$
+holds only for $d=1$, and the homogenised PDE should read
+$-\nabla\cdot(a_*\nabla\bar u)=f$ with $a_*$ a constant matrix. For $d\ge2$
+there is no closed formula: $a_*$ is defined through the solution of a corrector
+problem on $\mathbb{R}^d$ and depends on the geometry of the realisations, not
+only on the distribution of $a$ at a point. It lies between the harmonic mean
+$1/\mathbb{E}[a^{-1}]$ and the arithmetic mean $\mathbb{E}[a]$, and is a
+multiple of the identity when the law of $a$ is isotropic.
    \item[p425] In the Notes, in the display defining the kernel $K(x,y)$
 for the one-dimensional homogenisation corrector, the two cases should be
 interchanged:
@@ -1032,22 +1495,61 @@ reproducing the stated $\mathrm{Var}(d(x))$.
 ``$[G_{\ell}]_{ij} = \langle \psi_{\ell}\psi_{j}, \psi_{k}\rangle_{p}$''
 should read
 $[G_{\ell}]_{jk} = \langle \psi_{\ell}\psi_{j}, \psi_{k}\rangle_{p}$.
-   \item[p427] In the Notes, in the display following (9.130), $u_{ik}$ should read
+   \item[p426] In the Notes, in the display following (9.130), $u_{ik}$ should read
 $u_{kj}$. Setting $\vec{x}_{*}=\vec{x}_{k}$ and using
 $\phi_{i}(\vec{x}_{k}) = \delta_{ik}$ collapses the double sum in (9.130) to
 $\sum_{j=1}^{Q} u_{kj}\,\psi_{j}(\vec{y})$.
+   \item[p428] In Exercise 9.6, $\|z\|_{L^{2}(\Omega,H_{0}^{1}(D))}$ should read
+$|z|_{L^{2}(\Omega,H^{1}(D))}$, since $z$ need not vanish on $\partial D$, and
+``Corollary 9.17'' should read ``Lemma 9.17 and Corollary 9.18''.
+   \item[p429] Exercise 9.11 should also assume that Assumption 9.3 holds and
+that $f \in L^{2}(\Omega,\mathcal{F},L^{2}(D))$. These give the existence and
+uniqueness of $u$ and $u^{*}$, which the exercise takes for granted.
+   \item[p430] In Exercise 9.20, ``$P_{j}$, $i=0,1,\ldots$'' should read
+``$P_{j}$, $j=0,1,\ldots$''.
+   \item[p430] In Exercise 9.23, ``$\xi_{k} \sim \mathrm{U}(-\sqrt{3},\sqrt{3})$
+iid, $i=1,\ldots,M$'' should read ``\ldots, $k=1,\ldots,M$''.
+   \item[p430] In Exercise 9.24(a), $\|f(\cdot,\vec{y})\|_{L^{2}(D)}$ should read
+$\|\tilde{f}(\cdot,\vec{y})\|_{L^{2}(D)}$: the exercise is set for the
+approximate data $\tilde{a}$ and $\tilde{f}$, as in Theorem 9.76.
    \end{description}
  \item %C10
    \begin{description}
-   \item[p439] In Example 10.9, the eigenfunctions should read
+   \item[p432] In Example 10.1, ``there are two spatially homogeneous
+solutions $u=\pm1$ that are fixed points'' omits $u=0$. There are three
+spatially homogeneous fixed points: $u=\pm1$, which are stable, and $u=0$, which
+is unstable.
+   \item[p435] In (10.9) and (10.10), $\frac{dY}{dx}$ should read
+$\frac{dZ}{dx}$, the derivative of the observation, and likewise in the sentence
+following (10.9), where it is $Z(x)$ that is only H\"older continuous. The SPDE
+samples the conditional distribution of the signal $Y$ given the observations
+$Z$; the log-likelihood $\gamma^{-1}\int Y\,dZ-(2\gamma)^{-1}\int Y^{2}\,dx$ has
+gradient $\gamma^{-1}(dZ/dx-Y)$. As printed, the SPDE would need the signal it is
+meant to estimate. Figure 10.4 was computed with $dZ/dx$.
+   \item[p435] The boundary condition at $x=0$ should read $u(t,0)=0$, not
+$\frac{\partial u}{\partial x}(t,0)=0$, since the signal starts at $Y(0)=0$.
+   \item[p435] In the concrete example, $f(Y)=-Y$ and not $f(Y)=Y$. With
+$f(Y)=Y$ the signal grows exponentially, whereas Figure 10.4 shows the
+mean-reverting signal with $f(Y)=-Y$ on $[0,50]$. (10.10) is unchanged, and the
+boundary condition at $x=b$ reads $\frac{\partial u}{\partial x}(t,b)=-u(t,b)$.
+   \item[p438] In Example 10.8, the two eigenfunctions with the same
+eigenvalue should read $\sin(2\pi\ell x/a)$ and $\cos(2\pi\ell x/a)$, not
+$\sin(\ell x/a)$ and $\cos(\ell x/a)$: on $(0,a)$ the periodic eigenfunctions have period $a$, as the
+complex form $\mathrm{e}^{2\pi\mathrm{i}\ell x/a}$ in the same sentence shows.
+   \item[p439] In Example 10.9, ``$H^r_0(0,a)$ equals the fractional power space
+$\mathcal{D}(A^{r/2})$'' holds for $1/2<r<3/2$, where the boundary values
+$u(0)$ and $u(a)$ are defined, but not in general; for instance,
+$\mathcal{D}(A)=H^2(0,a)\cap H^1_0(0,a)\ne H^2_0(0,a)$. The process of Examples 10.9 and 10.10 is
+$\mathcal{D}(A^{r/2})$-valued. The eigenfunctions should read
 \[
 \chi_j(x)=\sqrt{2/a}\,\sin(j\pi x/a),
 \]
-as in Example 10.10. As printed, $\sqrt{2/a}\sin(j\pi x)$ is not an eigenfunction of
-$Au=-u_{xx}$ on $(0,a)$ with $\mathcal{D}(A)=H^2(0,a)\cap H^1_0(0,a)$ unless $a=1$.
+as in Example 10.10.
    \item[p440] In the caption of Algorithm 10.1, the value should read $\epsilon=0.001$, to
 agree with \texttt{myeps=0.001} in the listing below it (and in \texttt{get\_oned\_bj.m},
 Algorithm 10.3).
+   \item[p441] In Example 10.11, ``For $r=1$ and $a=1$'' should read ``For $r=1$ and
+$a=2\pi$'': Figure 10.6 is drawn on $[0,2\pi]$.
    \item[p441] In the caption of Algorithm 10.2, the first sentence should read ``If
 \texttt{iFspace=0}, the output \texttt{dW} is a matrix of $M$ columns with $k$th entry
 $W^{J-1}(t+\kappa\Delta t_{\mathrm{ref}},x_k)-W^{J-1}(t,x_k)$ for $k=1,\dots,J-1$.''
@@ -1061,12 +1563,28 @@ $\mathrm{e}^{2\pi\mathrm{i}\ell x_k/a}=\mathrm{e}^{2\pi\mathrm{i}\ell(k-1)/J}$; 
 $\mathrm{e}^{\mathrm{i}jk/J}$ drops the factor $2\pi$ and replaces $k-1$ by $k$. Only the
 corrected form is the inverse discrete Fourier transform named immediately below, as
 computed by \texttt{ifft} in \texttt{get\_oned\_dW.m}.
-   \item[p442--469] \texttt{meshgrid} is misused in Examples 10.12 and 10.40 and in Algorithms 10.5 and 10.10. See \texttt{exa\_10.40.m}.
-In consequence Figure 10.11 was computed not from the stated initial data
-$u_0=\sin(x_1)\cos(\pi x_2/8)$ but from $\sin(8x_1/\pi)\cos(\pi^2 x_2/64)$,
-which is likewise not periodic on $(0,2\pi)\times(0,16)$. The online code now
-uses the stated data, and the stated $J_1=J_2=128$, and therefore no longer
-reproduces the printed figure.
+   \item[p442] In Example 10.12, $W^J(t,\vec x)$ as displayed, with the complex
+eigenfunctions $\chi_{j_1,j_2}$ and real Brownian motions, is complex-valued. It
+should be the real-valued $Q$-Wiener process with these eigenvalues and
+eigenfunctions for $-J_i/2<j_i\le J_i/2$, whose real eigenfunctions are the real and
+imaginary parts of the $\chi_{j_1,j_2}$; this is what the construction that follows
+samples. In the same example, the eigenvalues of $-\Delta$ are
+$\lambda_{j_1,j_2}=4\pi^2(j_1^2/a_1^2+j_2^2/a_2^2)$, as Algorithm 10.5 uses; the
+printed $j_1^2+j_2^2$ agrees with it only for $a_1=a_2=2\pi$.
+   \item[p444] In Definition 10.14, the cylindrical Wiener process is not
+$U$-valued: the series (10.20) does not converge in $U$, as the preceding paragraph
+says. It takes values in any Hilbert space $U_1\supset U$ for which the inclusion is
+Hilbert--Schmidt.
+   \item[p445] Before Theorem 10.16, ``the $L^2_0$-valued process $B(t)$ is
+predictable (see Definition 8.6)'' should refer to Definition 8.10: Definition 8.6
+defines adapted processes, Definition 8.10 predictable ones.
+   \item[p450] In the proof of Lemma 10.24, Mercer's theorem gives
+$\sum_j q_j\chi_j(\vec x)^2=q(\vec x,\vec x)$ uniformly in $\vec x$, not
+$\sum_j q_j\|\chi_j\|_\infty^2<\infty$. The former is what the proof needs:
+\[
+\|G(u)\|_{L^2_0}^2=\int_D g(u(\vec x))^2q(\vec x,\vec x)\,d\vec x
+\le\sup_{\vec x}q(\vec x,\vec x)\,\|g(u)\|_{L^2(D)}^2.
+\]
    \item[p451] In the proof of Theorem 10.26, the contraction condition should read
 \[
 T^2+K^2 T^\zeta/\zeta<\frac{1}{2L^2},
@@ -1074,6 +1592,10 @@ T^2+K^2 T^\zeta/\zeta<\frac{1}{2L^2},
 and not $1/2L^2$. The preceding display gives $\|\mathcal{J}u_1-\mathcal{J}u_2\|^2_{\mathcal{H}_{2,T}}
 \le 2\left(T^2+K^2T^\zeta/\zeta\right)L^2\|u_1-u_2\|^2_{\mathcal{H}_{2,T}}$, so a contraction
 requires $2\left(T^2+K^2T^\zeta/\zeta\right)L^2<1$.
+   \item[p452] In Lemma 10.27, $\epsilon\in(0,\zeta)$ should read
+$\epsilon\in(0,\zeta/2)$; otherwise $\theta_1=\min\{\zeta/2-\epsilon,1/2\}$ can be negative,
+and the bound on $A^{-\zeta/2+\epsilon}(I-\mathrm{e}^{-(t_2-t_1)A})$ used in the proof needs
+$\zeta/2-\epsilon\ge0$.
    \item[p453] In the proof of Lemma 10.27, the constant should read
 $C_{\mathrm{III}}=(C_1+C_2)(1+K_T)$, without the square. The bounds on $\mathrm{III}_1$ and
 $\mathrm{III}_2$ add to give $(C_1+C_2)(t_2-t_1)^{\theta_1}\left(1+\sup_{0\le s\le T}
@@ -1084,6 +1606,15 @@ $C_{\mathrm{III}}$ linearly.
 $\mathrm{III}_2'$ should read $\int_{t_1}^{t_2}$ in place of $\int_0^t$, since
 $\mathrm{III}_2'=\int_{t_1}^{t_2}\left(\mathrm{e}^{-A(t_2-s)}-I\right)G(u(s))\,dW(s)$ and the
 It\^{o} isometry integrates over $[t_1,t_2]$, as on the line that follows.
+   \item[p454] In the proof of Theorem 10.28, the integral
+$\int_0^t\|A^{1/2}\mathrm{e}^{-(t-s)A}\|^2_{\mathcal{L}(H)}\,ds$ is not finite: when the
+eigenvalues of $A$ are unbounded, $\|A^{1/2}\mathrm{e}^{-sA}\|^2_{\mathcal{L}(H)}$ behaves like
+$(2\mathrm{e}s)^{-1}$ as $s\to0$. The theorem holds: summing over the eigenfunctions
+$\chi_j$ of $Q$ before integrating gives
+$\int_0^t\|A^{\zeta/2}\mathrm{e}^{-(t-s)A}\|^2_{L^2_0}\,ds\le\frac12\|A^{(\zeta-1)/2}\|^2_{L^2_0}$.
+For the same reason, the first inequality of Exercise 10.8 should read
+$\int_0^T\|A^\beta\mathrm{e}^{-tA}v\|^2\,dt\le\frac12\lambda_1^{2\beta-1}\|v\|^2$ for $v\in H$,
+with the operator norm removed.
    \item[p457] The covariance identity should read
 \[
 \mathrm{Cov}\!\left(W^J(t,x_i),W^J(t,x_k)\right)=(t/h)\,\delta_{ik},
@@ -1097,6 +1628,18 @@ $\Delta t=T/N=0.1/N$; the errors $|v(i)-0.3489|$ from the computation displayed 
 be reported in their place. As printed the values fall by exactly a factor $4$ as $N$
 quadruples, so they fit $\Delta t^{1}$ and are inconsistent with both the quoted
 $0.96\,\Delta t^{0.65}$ and the order-$\Delta t^{1/2}$ rate stated next.
+   \item[p461] In Theorem 10.34, ``defined by (10.47)'' should read ``defined by (10.48)'':
+the fully discrete approximation is (10.48), as the proof states.
+   \item[p462] In the proof of Theorem 10.34, the factorisation in the estimate of
+$\mathrm{III}_1$ should read
+\[
+\left(\mathrm{e}^{-(t_n-s)A}-\mathrm{e}^{-(t_n-t_k)A}\right)A^{(1-\zeta)/2}
+=A^{1/2-\epsilon}\,\mathrm{e}^{-(t_n-s)A}\,A^{-\zeta/2+\epsilon}
+\left(I-\mathrm{e}^{-(s-t_k)A}\right),
+\]
+and $\mathrm{e}^{-(t_n-t_k)A}$ should be replaced by $\mathrm{e}^{-(t_n-s)A}$ in the
+two integrals that follow. As printed, the factor $\mathrm{e}^{-(t_k-s)A}$ has
+$t_k-s<0$ and is unbounded.
    \item[p465] In (10.54), the definition should read
 \[
 \mathcal{G}(s;u)\coloneq G(u)+G'(u)\,G(u)\int_{t_n}^{s}dW(r),
@@ -1114,6 +1657,52 @@ $G(u)$, and the proof of Lemma 10.36 uses the corrected form.
 \]
 as in the display that follows: for $\chi\in C(\overline{D})$ the quantity
 $\left(G(u(s))-\mathcal{G}(s,u(t_k))\right)\chi$ takes values in $H$, not in $\mathcal{L}(H)$.
+
+ The bound on $R^\dagger$ needs a fourth moment: as
+$\|(u(s)-u(t_k))^2\|_{L^2(D)}=\|u(s)-u(t_k)\|^2_{L^4(D)}$,
+\[
+\|R^\dagger(t_k,s)\|_{L^2(\Omega,L^2(D))}
+\le\tfrac12\|g''\|_\infty\,\mathbb{E}\!\left[\|u(s)-u(t_k)\|^4_{L^4(D)}\right]^{1/2},
+\]
+which is not controlled by $\|u(s)-u(t_k)\|^2_{L^2(\Omega,H)}$ and (10.38). The lemma
+requires $$\mathbb{E}\!\left[\|u(s)-u(t)\|^4_{L^4(D)}\right]^{1/4}\le K_4|s-t|^{\theta_2/2}$$ for
+$0\le t\le s\le T$ (not needed when $g$ is affine). This holds, for example, for
+$D\subset\mathbb{R}$; see Kruse, \emph{Strong and Weak Approximation of
+Semilinear Stochastic Evolution Equations}, 2014, Theorem 2.31.
+
+Mercer's theorem does not give $\sum_j q_j\|\chi_j\|^2_\infty<\infty$. It gives
+$\sum_j q_j\chi_j(x)^2=q(x,x)$ uniformly on $\overline D$, so that
+\[
+\|G(u(s))-\mathcal{G}(s;u(t_k))\|^2_{L^2(\Omega,L^2_0)}
+=\mathbb{E}\!\left[\int_D R(x)^2\,q(x,x)\,dx\right]
+\le\sup_{x\in\overline D}q(x,x)\,\|R\|^2_{L^2(\Omega,H)}.
+\]
+   \item[p467] In Corollary 10.38, Assumption 10.23 for $G=\sigma I$ reads
+\[
+\|A^{(\zeta-1)/2}Q^{1/2}\|_{\mathrm{HS}(U,H)}<\infty
+\quad\text{not}\quad
+\|A^{(1-\zeta)/2}Q^{1/2}\|_{\mathrm{HS}(U,H)}<\infty.
+\]
+Also, Theorem 10.34 gives the rate $\Delta t^{\theta_1}$ with
+$\theta_1=\min\{\zeta/2-\epsilon,1/2\}$, so (10.58) should read
+\[
+\max_{0\le t_n\le T}\|u(t_n)-u_{J,n}\|_{L^2(\Omega,H)}\le K\Delta t^{\theta_1}:
+\]
+for $\zeta>1$ the drift term limits the rate to $1/2$ in this argument.
+   \item[p468] In Example 10.39, for $r=1$ ($\zeta=2$) Corollary 10.38 guarantees the
+rate $1/2$ only. The observed rate $1$ reflects a finer treatment of the drift term
+that is available for additive noise and smooth $f$.
+   \item[p469, p470] Figure 10.11 (Example 10.40) was not computed with the
+stated $J_1=J_2=128$, nor from the stated initial data. It used
+\[
+u_0=\sin(8x_1/\pi)\cos(\pi^2 x_2/64)
+\quad\text{not}\quad
+u_0=\sin(x_1)\cos(\pi x_2/8),
+\]
+and the former is not periodic on $(0,2\pi)\times(0,16)$.
+   \item[p470] For the stochastic integral, the approximation is
+$\mathrm{e}^{-(t_{n+1}-s)\lambda_j}\approx\mathrm{e}^{-\Delta t\lambda_j}$ (the value at
+$s=t_n$), not $\mathrm{e}^{-t_{n+1}\lambda_j}$.
    \item[p471] In (10.62), the first term on the right-hand side should read
 $\mathrm{e}^{-\Delta t\lambda_j}\,\widehat{u}_{j,n}$, with the indices in the order $j,n$ as
 on the left-hand side.
@@ -1126,17 +1715,20 @@ $\langle g(u_{h,n})\Delta W_n,\phi_j\rangle_{L^2(0,a)}$. By the definition given
 $\langle G(\vec u_{h,n})\chi_k,\phi_j\rangle_{L^2(0,a)}$, which is not diagonal; Algorithm
 10.12 accordingly assembles this term with the load-vector routine
 \texttt{oned\_linear\_FEM\_b.m}.
+   \item[p475] In Example 10.43, the observed errors of order $h^2$ are better than
+Theorem 10.41 guarantees, not ``as predicted in Theorem 10.41 with $\zeta=2$'': with
+$J_w=J$ the condition $J_w\ge c\,h^{-\zeta/r}$ holds for $r=1$ only when $\zeta\le1$,
+and the theorem then gives order $h$.
 
-   \item[p480] In Exercise 10.8, the hypothesis should read $2\beta\le0$ (that is,
-$\beta\le0$), which is the range in which the bound is used in the proof of Theorem 10.26.
-For $0<\beta\le1/2$ the stated bound fails: as $A^\beta\mathrm{e}^{-tA}$ is diagonal,
-$\|A^\beta\mathrm{e}^{-tA}\|^2_{\mathcal{L}(H)}=\sup_j\lambda_j^{2\beta}\mathrm{e}^{-2t\lambda_j}$,
-and for $\beta>0$ the maximiser of $\lambda\mapsto\lambda^{2\beta}\mathrm{e}^{-2t\lambda}$ is
-$\lambda=\beta/t$, not $\lambda_1$. For $Au=-u_{xx}$ on $(0,\pi)$ with homogeneous Dirichlet
-boundary conditions ($\lambda_j=j^2$, $\lambda_1=1$) and $\beta=1/2$, taking
-$j=\lceil(2t)^{-1/2}\rceil$ gives $\|A^{1/2}\mathrm{e}^{-tA}\|^2_{\mathcal{L}(H)}\ge
-\mathrm{e}^{-4}/(2t)$ for $0<t\le1/2$, so the integral diverges while the claimed bound is
-$\tfrac12\lambda_1^{0}=\tfrac12$.
+
+   \item[p480] In Exercise 10.4, $\mathrm{HS}(Q_1^{1/2}U_1H)$ should read
+$\mathrm{HS}(Q_1^{1/2}U_1,H)$ (missing comma).
+   \item[p480] In Exercise 10.7, the left-hand side of the second inequality should read
+$\mathbb{E}\bigl[\|AB\|^2_{L^2_0}\bigr]$; the expectation is taken twice in
+$\mathbb{E}\bigl[\|AB\|^2_{L^2(\Omega,L^2_0)}\bigr]$.
+   \item[p480] In Exercise 10.8, the hypothesis should read $\beta\le0$, which is the range in which the bound is used in the proof of Theorem 10.26.
+   \item[p480] In Exercise 10.12, the boundary condition should read
+$u(x)=\Delta u(x)=0$ for $x\in\partial D$ (the variable $x$ is missing).
    \end{description}
  \item[Appendix.]\hphantom{\,}
  \end{enumerate}
@@ -1151,15 +1743,18 @@ and not $\frac{1}{2(b-a)}\bigl(u(a)+u(b)\bigr)$. This is the integral of the
 linear interpolant $p(x)=\bigl(u(a)(b-x)+u(b)(x-a)\bigr)/(b-a)$ given in the
 preceding line.
 
-     \item[p487--488] In \S A.5, the value of the Euler constant
-should read ``Its value is approximately $0.5772$'' and not $0.5572$, as
-$\gamma=0.57721566\ldots$
+     \item[p487] In the proof of Corollary A.12, take $M(t)=|\beta(t)|$, which is a
+non-negative submartingale since $|\beta(s)|=|\mathbb{E}[\beta(t)\,|\,\mathcal{F}_s]|\le
+\mathbb{E}[|\beta(t)|\,|\,\mathcal{F}_s]$; Theorem~A.11 then gives (A.12). With
+$M(t)=|\beta(t)|^2$, as printed, Theorem~A.11 bounds the fourth moment
+$\mathbb{E}[\sup_{0\le t\le T}|\beta(t)|^4]$ instead. Accordingly, the statement should
+read ``$|\beta(t)|$ is a submartingale''.
 
      \item[p487]
  The discrete Gronwall inequality (Lemma A.14) is incorrect. It should either be
 \begin{lemma} Consider $z_n\ge 0$  such that $z_n\le a+bz_{n-1}$ for $n=1,2,\dots$  and $a,b\ge 0$. If $b=1$, then $z_n\le z_0+na$. If $b\ne 1$, then
 \[
-z_n\le b^n z_0+ \frac{a}{1-b}(1-b^n).\
+z_n\le b^n z_0+ \frac{a}{1-b}(1-b^n).
 \]
 \end{lemma}
 or
@@ -1181,10 +1776,10 @@ z_n& \le a+b\sum_{k=0}^{n-1} z_k \quad\text{by (*)}\\
 Therefore, $z_n \le a(1 + b)^n$ 
 for all $n = 0,1,2,\dots$ by induction. Finally, $z_n \le a \exp(bn)$ as $1 + x \le \exp(x)$ for
 $x \ge 0$. The second lemma can be used in the proof of Theorems 3.55 and 10.34.
+
+     \item[p487--488] In \S A.5, the value of the Euler constant
+should read ``Its value is approximately $0.5772$'' and not $0.5572$, as
+$\gamma=0.57721566\ldots$
  \end{description}
 
 \end{document}
-
-
-
-
